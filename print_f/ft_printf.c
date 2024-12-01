@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-static int var_format(char spec, va_list *args)
+static int	var_format(char spec, va_list *args)
 {
 	if (spec == 'c')
 		return (ft_print_char(va_arg(*args, int)));
@@ -17,15 +17,15 @@ static int var_format(char spec, va_list *args)
 	if (spec == '%')
 		return (write(1, "%", 1));
 	return (0);
-	}
+}
 
-int ft_printf(const char *str, ...)
+int	ft_printf(const char *str, ...)
 {
 	va_list	args;
-	va_start(args, str);
-	int	count;
-	int	sum;
+	int		count;
+	int		sum;
 
+	va_start(args, str);
 	count = 0;
 	sum = 0;
 	while (*str)
@@ -34,14 +34,15 @@ int ft_printf(const char *str, ...)
 		{
 			str++;
 			count += handle_spec(*str, &args);
-		} else 
+		}
+		else
 		{
 			write (1, str, 1);
 			count++;
 		}
 		if (count < 0)
 			return (-1);
-		sum += count;	
+		sum += count;
 	}
 	va_end(args);
 	return (sum);

@@ -2,5 +2,4 @@
 
 int	ft_print_unsigned_int(int num)
 {
-	
 }
