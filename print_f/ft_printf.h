@@ -8,5 +8,6 @@
 # include <stdarg.h>
 
 int	ft_print_char(char c);
+int	ft_print_str(char *str);
 
 #endif
