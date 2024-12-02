@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-int	ft_print_str(char *str)
+int	print_str(char *str)
 {
 	int	str_len;
 	int	i;

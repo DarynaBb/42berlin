@@ -7,8 +7,9 @@
 # include <limits.h>
 # include <stdarg.h>
 
-int	ft_print_char(char c);
-int	ft_print_str(char *str);
-int	ft_print_int(int num);
+int	print_char(char c);
+int	print_str(char *str);
+int	print_int(int num);
+int	print_unsigned_int(int num);
 
 #endif
