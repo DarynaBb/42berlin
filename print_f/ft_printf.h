@@ -9,5 +9,6 @@
 
 int	ft_print_char(char c);
 int	ft_print_str(char *str);
+int	ft_print_int(int num);
 
 #endif
