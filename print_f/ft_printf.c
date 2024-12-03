@@ -1,19 +1,19 @@
 #include "ft_printf.h"
 
-static int	var_format(char spec, va_list *args)
+static int	handle_spec(char spec, va_list *args)
 {
 	if (spec == 'c')
-		return (ft_print_char(va_arg(*args, int)));
+		return (print_char(va_arg(*args, int)));
 	if (spec == 's')
-		return (ft_print_str(va_arg(*args, const char *)));
+		return (print_str(va_arg(*args, const char *)));
 	if (spec == 'p')
-		return (ft_print_pointer(va_arg(*args, void *)));
+		return (print_pointer(va_arg(*args, uintptr_t)));
 	if (spec == 'd' || spec == 'i')
-		return (ft_print_int(va_arg(*args, int)));
+		return (print_int(va_arg(*args, int)));
 	if (spec == 'u')
-		return (ft_print_unsigned_int(va_arg(*args, unsigned int)));
+		return (print_unsigned_int(va_arg(*args, unsigned int)));
 	if (spec == 'x' || spec == 'X')
-		return (ft_print_hex(va_arg(*args, unsigned int)));
+		return (print_hex(va_arg(*args, unsigned int), spec));
 	if (spec == '%')
 		return (write(1, "%", 1));
 	return (0);

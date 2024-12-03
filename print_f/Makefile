@@ -4,8 +4,13 @@ NAME = libftprintf.a
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror
 
-SRC = ft_atoi.c \
-			
+SRC = ft_printf.c \
+print_char.c \
+print_hex.c \
+print_int.c \
+print_pointer.c \
+print_str.c \
+print_unsigned_int.c
 
 # Object files
 # automatically generates the names of the object files from the source files

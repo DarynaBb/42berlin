@@ -8,8 +8,10 @@
 # include <stdarg.h>
 
 int	print_char(char c);
-int	print_str(char *str);
+int	print_str(const char *str);
 int	print_int(int num);
-int	print_unsigned_int(int num);
+int	print_unsigned_int(unsigned int num);
+int	print_hex(unsigned int num, char spec);
+int	print_pointer(uintptr_t ptr);
 
 #endif
