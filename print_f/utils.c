@@ -30,7 +30,7 @@ char	*hex_string(char *str, int length)
 	return (hex_string);
 }
 
-char	*dec_to_hex(unsigned int num, char spec)
+char	*dec_to_hex(uintptr_t num, char spec)
 {
 	char	buffer[100];
 	int		i;

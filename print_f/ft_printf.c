@@ -23,27 +23,28 @@ int	ft_printf(const char *str, ...)
 {
 	va_list	args;
 	int		count;
-	int		sum;
+	int		total;
 
 	va_start(args, str);
 	count = 0;
-	sum = 0;
+	total = 0;
 	while (*str)
 	{
 		if (*str == '%' && *(str + 1))
 		{
 			str++;
-			count += handle_spec(*str, &args);
+			count = handle_spec(*str, &args);
 		}
 		else
-		{
-			write (1, str, 1);
-			count++;
-		}
+			count = write (1, str, 1);
 		if (count < 0)
+		{
+			va_end(args);
 			return (-1);
-		sum += count;
+		}
+		total += count;
+		str++;
 	}
 	va_end(args);
-	return (sum);
+	return (total);
 }
