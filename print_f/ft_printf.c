@@ -39,8 +39,7 @@ int	ft_printf(const char *str, ...)
 			count = write (1, str, 1);
 		if (count < 0)
 		{
-			va_end(args);
-			return (-1);
+			return (va_end(args), -1);
 		}
 		total += count;
 		str++;
