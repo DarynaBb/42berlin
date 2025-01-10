@@ -32,6 +32,7 @@ static char	*read_and_update_leftovers(int fd, char **leftovers)
 		*leftovers = new_leftovers;
 		if (ft_strchr(*leftovers, '\n'))
 			break ;
+		bytes_read = read(fd, buffer, BUFFER_SIZE);
 	}
 	if (bytes_read < 0)
 	{
@@ -94,3 +95,24 @@ char	*get_next_line(int fd)
 	leftovers = update_leftovers_after_line_extracting(&leftovers);
 	return (line);
 }
+
+// int main(void)
+// {
+// 	int	fd;
+// 	char *line;
+
+// 	fd = open("test.txt", O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		perror("Error opening file");
+// 		return (1);
+// 	}
+// 	while ((line = get_next_line(fd)) != NULL)
+// 	{
+// 		printf("%s", line);
+// 		free(line);
+// 	}
+// 	close(fd);
+// 	return (0);
+// }
+// cc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=42 -o get_next_line
