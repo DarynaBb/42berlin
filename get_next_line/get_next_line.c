@@ -1,6 +1,4 @@
 #include "get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
 
 static void	*free_leftovers(char **leftovers)
 {
@@ -96,23 +94,59 @@ char	*get_next_line(int fd)
 	return (line);
 }
 
+#include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
+
 // int main(void)
 // {
-// 	int	fd;
-// 	char *line;
-
+//     int fd;
+//     char *line;
 // 	fd = open("test.txt", O_RDONLY);
-// 	if (fd < 0)
-// 	{
-// 		perror("Error opening file");
-// 		return (1);
-// 	}
+    
+
+
+//     while ((line = get_next_line(fd)) != NULL)
+//     {
+//         printf("%s", line);
+//         free(line);
+//     }
+
+//     if (line == NULL)
+//     {
+//         printf("Function returned NULL as expected.\n");
+//     }
+//     else
+//     {
+//         printf("Function did not return NULL.\n");
+//     }
+// 	close(fd);
+//     return (0);
+// }
+
+// int main(int count, char *args[]) {
+// 	int fd;
+		
+// 	if (args[1])
+// 		fd = open(args[1], O_RDONLY);
+//  	else
+//   		fd = STDIN_FILENO;
+// 	char *line;
 // 	while ((line = get_next_line(fd)) != NULL)
 // 	{
 // 		printf("%s", line);
 // 		free(line);
 // 	}
+// 	if (line == NULL)
+// 	{
+// 		printf("Function returned NULL as expected.\n");
+// 	}
+// 	else
+// 	{
+// 		printf("Function did not return NULL.\n");
+// 		}
 // 	close(fd);
 // 	return (0);
 // }
+
 // cc get_next_line.c get_next_line_utils.c -D BUFFER_SIZE=42 -o get_next_line
