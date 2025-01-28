@@ -7,22 +7,38 @@ int main(int argc, char **argv)
 
     // Assuming validate_arguments is correctly setting up stack a
     a = validate_arguments(argc - 1, argv + 1);
+	if (!a)
+    {
+        printf("Stack initialization failed.\n");
+        return (1);
+    }
 
     // Call ra function to rotate stack a
     // swap(&a);
 	// rotate(&a);
 	// reverse_rotate(&a);
 	// sort_two(&a);
-	swap(&a, 'a');
-    // Optionally, print the stack after rotation to check the result
+	// swap(&a, 'a');
+	// sort_three(&a);
+	// find_smallest(a);
+	// find_largest(a);
+	// find_position(a, 15);
+	find_target_position(a, 15);
+
+    printf("Initial Stack A:\n");
     t_stack_node *current = a;
     while (current)
     {
-        write(1, "A-Element: ", 9);
-        ft_putnbr_fd(current->data, 1); // Replace with your number printing function
-        write(1, "\n", 1);
+        printf("Data: %d\n", current->data);
         current = current->next;
     }
+
+    // Test find_target_position
+    // int test_number = 15; // Example number to test
+    // printf("\nTesting find_target_position for number: %d\n", test_number);
+    // int target_pos = find_target_position(a, test_number);
+    // printf("Target Position: %d\n", target_pos);
+
 	t_stack_node *temp = b;
     while (temp)
     {
