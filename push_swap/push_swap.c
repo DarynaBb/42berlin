@@ -23,7 +23,11 @@ int main(int argc, char **argv)
 	// find_smallest(a);
 	// find_largest(a);
 	// find_position(a, 15);
-	find_target_position(a, 15);
+	// find_target_position(a, 15);
+    sort(&a, &b);
+    // calculate_rotations(a, 15);
+    
+    // calculate_cost(a, b);
 
     printf("Initial Stack A:\n");
     t_stack_node *current = a;
@@ -42,7 +46,7 @@ int main(int argc, char **argv)
 	t_stack_node *temp = b;
     while (temp)
     {
-        write(1, "B-Element: ", 9);
+        write(1, "B-Element: \n", 9);
         ft_putnbr_fd(temp->data, 1); // Replace with your number printing function
         write(1, "\n", 1);
         temp = temp->next;

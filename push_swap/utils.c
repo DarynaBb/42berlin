@@ -86,5 +86,6 @@ int	stack_len(t_stack_node *stack)
 		stack_len++;
 		stack = stack->next;
 	}
+	// printf("Stack length:%d\n", stack_len);
 	return (stack_len);
 }

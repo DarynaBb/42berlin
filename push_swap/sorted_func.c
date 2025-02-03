@@ -6,6 +6,12 @@ void	sort_two(t_stack_node **stack)
 		swap(stack,'a');
 }
 
+void	sort_two_desc(t_stack_node **stack)
+{
+	if ((*stack)->data < (*stack)->next->data)
+		swap(stack,'a');
+}
+
 void	sort_three(t_stack_node **stack)
 {
 	t_stack_node	*current;
