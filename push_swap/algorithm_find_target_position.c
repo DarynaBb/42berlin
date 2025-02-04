@@ -38,13 +38,13 @@ int	find_largest(t_stack_node *stack)
 	return (largest);
 }
 
-int	find_position(t_stack_node *b, int number)
+int	find_position(t_stack_node *stack, int number)
 {
 	int				position;
 	t_stack_node	*current;
 
 	position = 0;
-	current = b;
+	current = stack;
 	while (current)
 	{
 		if (current->data == number)
@@ -72,18 +72,12 @@ int	find_target_position(t_stack_node *b, int number)
 	smallest = find_smallest(b);
 	largest = find_largest(b);
 	position = 0;
-	if (number > largest)
+	if (number > largest || number < smallest)
 	{
 		printf("target position: %d\n", (position));
 		return (position);
 	}
-	// Case 2: Number is smaller than the smallest
-	if (number < smallest)
-	{
-		position = find_position(b, smallest); // Place after the smallest
-		printf("target position: %d (after smallest %d)\n", position + 1, smallest);
-		return (position + 1); // Bottom of the stack
-	}
+	
 	current = b;
 	while (current && current->next)
 	{
@@ -96,7 +90,7 @@ int	find_target_position(t_stack_node *b, int number)
 		position++;
 	}
 	// Case 4: Wrap-around (number fits between last and first nodes)
-    if (current && number < current->data && number > b->data)
+    if (current && number < current->data && number > current->data)
     {
         printf("target position: %d (wrap-around between %d and %d)\n", position + 1, current->data, b->data);
         return (position + 1);
@@ -105,3 +99,26 @@ int	find_target_position(t_stack_node *b, int number)
 	return (position);
 }
 
+// int find_target_position(t_stack_node *b, int data)
+// {
+//     int position = 0;
+//     int target_position = 0;
+//     t_stack_node *current = b;
+
+//     if (!b) // If stack B is empty
+//         return 0;
+
+//     while (current)
+//     {
+//         // Check if `data` fits between `current` and `current->next` in descending order
+//         if ((current->data > data && (!current->next || current->next->data < data)) ||
+//             (current->next == b && data > b->data)) // Circular case
+//         {
+//             return position + 1;
+//         }
+//         current = current->next;
+//         position++;
+//     }
+
+//     return target_position; // Default is the last position
+// }

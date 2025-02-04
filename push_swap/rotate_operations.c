@@ -19,9 +19,32 @@ void	rotate(t_stack_node **stack, char stack_name)
 		write(1, "rb\n", 3);
 }
 
-void	rotate_both(t_stack_node **a, t_stack_node **b)
+void rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, int rotations_b)
 {
-	rotate(a, 0);
-	rotate(b, 0);
-	write(1, "rr\n", 3);
+    while (rotations_a > 0 && rotations_b > 0)
+    {
+        rotate(a, 0);
+		rotate(b, 0);
+		write(1, "rr\n", 3); // Simultaneous rotate for both stacks
+        rotations_a--;
+        rotations_b--;
+    }
+    // Rotate remaining elements in A or B
+    while (rotations_a > 0)
+    {
+        rotate(a, 'a');
+        rotations_a--;
+    }
+    while (rotations_b > 0)
+    {
+        rotate(b, 'b');
+        rotations_b--;
+    }
 }
+
+// void	rotate_both(t_stack_node **a, t_stack_node **b)
+// {
+// 	rotate(a, 0);
+// 	rotate(b, 0);
+// 	write(1, "rr\n", 3);
+// }

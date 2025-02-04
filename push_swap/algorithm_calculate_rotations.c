@@ -1,21 +1,6 @@
 #include "push_swap.h"
 
-int find_value_at_position(t_stack_node *stack, int position)
-{
-    int index = 0;
-
-    while (stack)
-    {
-        if (index == position)
-            return stack->data;
-        stack = stack->next;
-        index++;
-    }
-
-    return -1; // Return -1 if the position is invalid
-}
-
-int	calculate_rotations(t_stack_node *stack, int number)
+int	calculate_rotations_a(t_stack_node *stack, int number)
 {
 	int	position;
 	int	size;
@@ -23,13 +8,33 @@ int	calculate_rotations(t_stack_node *stack, int number)
 
 	position = find_position(stack, number);
 	if (position == -1)
-        return (-1);
+		return (-1);
 	size = stack_len(stack);
 	if (position <= size / 2)
 		rotations = position;
 	else
-	rotations = size - position;
+	rotations = -(size - position);
 	printf("rotations number %d for number %d\n", rotations, number);
+	return (rotations);
+}
+
+int calculate_rotations_b(t_stack_node *stack, int target_position)
+{
+	int	size;
+	int	rotations;
+
+	size = stack_len(stack);
+	if (target_position < 0 || target_position >= size)
+	{
+		printf("Error: Invalid target position %d for stack size %d\n", target_position, size);
+		return (-1);
+	}
+	if (target_position <= size / 2)
+		rotations = target_position;
+	else
+		rotations = -(size - target_position);
+
+	printf("Rotations in stack B for target position %d: %d\n", target_position, rotations);
 	return (rotations);
 }
 
@@ -40,7 +45,6 @@ void	calculate_cost(t_stack_node *a, t_stack_node *b)
 	int	cost_b;
 	int	total_cost;
 	int	target_position;
-	int target_value;
 
 	if (!a || !b)
 		return ;
@@ -51,33 +55,40 @@ void	calculate_cost(t_stack_node *a, t_stack_node *b)
 		if (target_position == -1)
 		{
 			printf("Error: No valid target position for number %d\n", current_a->data);
-			current_a->push_cost = INT_MAX; // Mark as impossible to move
+			current_a->push_cost = INT_MAX;
 			current_a = current_a->next;
 			continue;
 		}
-		target_value = find_value_at_position(b, target_position);
-        if (target_value == -1) // Error handling for invalid position
-        {
-            printf("Error: Target value not found in stack B for position %d\n", target_position);
-            current_a->push_cost = INT_MAX;
-            current_a = current_a->next;
-            continue;
-        }
-		cost_a = calculate_rotations(a, current_a->data);
-		cost_b = calculate_rotations(b, target_value);
+		cost_a = calculate_rotations_a(a, current_a->data);
+		cost_b = calculate_rotations_b(b, target_position);
 		printf("cost A: %d\n", cost_a);
 		printf("cost B: %d\n", cost_b);
 
-		if (cost_a == -1 || cost_b == -1)
+		if (cost_a != INT_MAX && cost_b != INT_MAX)
 		{
-			printf("Error: Invalid cost for number %d\n", current_a->data);
-			current_a->push_cost = INT_MAX;
+			if ((cost_a > 0 && cost_b > 0) || (cost_a < 0 && cost_b < 0))
+			{
+				if (cost_a > cost_b)
+					total_cost = cost_a;
+				else
+					total_cost = cost_b;
+				printf("Simultaneous rotation, total cost: %d\n", total_cost);	
+			}
+			else
+			{
+				if (cost_a < 0)
+					cost_a = -cost_a;
+				if (cost_b < 0)
+					cost_b = -cost_b;
+				total_cost = cost_a + cost_b;
+				printf("Separate rotations, total cost: %d\n", total_cost);
+			}
+			current_a->push_cost = total_cost;
 		}
 		else
 		{
-			total_cost = cost_a + cost_b;
-			printf("total cost: %d\n", total_cost);
-			current_a->push_cost = total_cost;
+			printf("Error: Invalid cost for number %d\n", current_a->data);
+			current_a->push_cost = INT_MAX;
 		}
 		current_a = current_a->next;
 	}
@@ -105,29 +116,68 @@ t_stack_node *find_cheapest_move(t_stack_node *a)
 	return (cheapest);
 }
 
+void bring_target_to_top(t_stack_node **b, int target_position)
+{
+	int rotations = target_position;
+
+	if (rotations > 0)
+	{
+		while (rotations-- > 0)
+			rotate(b, 'b');
+	}
+	else
+	{
+		while (rotations++ < 0)
+			reverse_rotate(b, 'b');
+	}
+}
+
 void	push_cheapest_node(t_stack_node **a, t_stack_node **b)
 {
 	t_stack_node	*cheapest;
-	t_stack_node	*current;
-	int				position;
+	int				cost_a;
+	int				cost_b;
 
-	current = *a;
-	calculate_cost(*a, *b);
-	cheapest = find_cheapest_move(*a);
-	if (!cheapest || cheapest->push_cost == INT_MAX)
-    {
-        printf("Error: No valid cheapest node found to push.\n");
-        return;
-    }
-
-	position = find_position(*a, cheapest->data);
-	while (current->data != cheapest->data)
+	while (stack_len(*a) > 3) 
 	{
-		if (position < stack_len(*a) / 2)
+		calculate_cost(*a, *b);
+		cheapest = find_cheapest_move(*a);
+		if (!cheapest || cheapest->push_cost == INT_MAX)
+		{
+			printf("Error: No valid cheapest node found to push.\n");
+			return;
+		}
+		cost_a = calculate_rotations_a(*a, cheapest->data);
+		cost_b = calculate_rotations_b(*b, find_target_position(*b, cheapest->data));
+		if (cost_a > 0 && cost_b > 0)
+		{
+			rotate_both(a, b, cost_a, cost_b);
+		}
+		else if (cost_a < 0 && cost_b < 0)
+		{
+			reverse_rotate_both(a, b, -cost_a, -cost_b);
+		}
+		else if (cost_a > 0)
+		{
 			rotate(a, 'a');
-		else 
+			if (cost_b > 0)
+				rotate(b, 'b');
+			else
+				reverse_rotate(b, 'b');
+		}
+		else if (cost_b > 0)
+		{
+			rotate(b, 'b');
 			reverse_rotate(a, 'a');
-		current = current->next;
+		}
+		else
+		{
+			reverse_rotate_both(a, b, -cost_a, -cost_b);
+		}
+		// target_position = find_target_position(*b, cheapest->data);
+		// bring_target_to_top(b, target_position);
+		pb(a, b);
 	}
-	pb(a, b);
+	
 }
+

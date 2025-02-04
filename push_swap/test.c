@@ -16,8 +16,9 @@ void	sort(t_stack_node **a, t_stack_node **b)
 	{
 		pb(a, b);
 		pb(a, b);
-		sort_two_desc(b);
+		// sort_two_desc(b);
+		push_cheapest_node(a, b);
 	}
-	push_cheapest_node(a, b);
+	
 }
 

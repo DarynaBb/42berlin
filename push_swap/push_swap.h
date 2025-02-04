@@ -38,9 +38,9 @@ void	swap_both(t_stack_node **a, t_stack_node **b);
 void	pa(t_stack_node **a, t_stack_node **b);
 void	pb(t_stack_node **a, t_stack_node **b);
 void	rotate(t_stack_node **stack, char stack_name);
-void	rotate_both(t_stack_node **a, t_stack_node **b);
+void	rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, int rotations_b);
 void	reverse_rotate(t_stack_node **stack, char stack_name);
-void	reverse_rotate_both(t_stack_node **a, t_stack_node **b);
+void	reverse_rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, int rotations_b);
 
 // Sort
 void	sort_two(t_stack_node **stack);
@@ -49,11 +49,11 @@ void	sort_three(t_stack_node **stack);
 // Algorithm - find target position
 int	find_smallest(t_stack_node *stack);
 int	find_largest(t_stack_node *stack);
-int	find_position(t_stack_node *b, int number);
+int	find_position(t_stack_node *stack, int number);
 int	find_target_position(t_stack_node *b, int number);
 
 // Algorithm - push cheaoest node
-int	calculate_rotations(t_stack_node *stack, int number);
+// int	calculate_rotations(t_stack_node *stack, int number);
 void	calculate_cost(t_stack_node *a, t_stack_node *b);
 void	push_cheapest_node(t_stack_node **a, t_stack_node **b);
 
