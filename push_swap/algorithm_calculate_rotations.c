@@ -160,15 +160,14 @@ void	push_cheapest_node(t_stack_node **a, t_stack_node **b)
 		else if (cost_a > 0)
 		{
 			rotate(a, 'a');
-			if (cost_b > 0)
-				rotate(b, 'b');
-			else
+			if (cost_b < 0)
 				reverse_rotate(b, 'b');
 		}
 		else if (cost_b > 0)
 		{
 			rotate(b, 'b');
-			reverse_rotate(a, 'a');
+			if (cost_a < 0)
+				reverse_rotate(a, 'a');
 		}
 		else
 		{
