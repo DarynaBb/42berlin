@@ -36,13 +36,6 @@ int main(int argc, char **argv)
         printf("Data: %d\n", current->data);
         current = current->next;
     }
-
-    // Test find_target_position
-    // int test_number = 15; // Example number to test
-    // printf("\nTesting find_target_position for number: %d\n", test_number);
-    // int target_pos = find_target_position(a, test_number);
-    // printf("Target Position: %d\n", target_pos);
-
 	t_stack_node *temp = b;
     while (temp)
     {
