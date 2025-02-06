@@ -49,103 +49,52 @@ int	find_position(t_stack_node *stack, int number)
 	{
 		if (current->data == number)
 		{
-			printf("find_position: number %d found at position %d\n", number, position);
+			// printf("find_position: number %d found at position %d\n", number, position);
 			return (position);
 		}
 			
 		current = current->next;
 		position++;
 	}
-	printf("find_position: number %d not found, returning -1\n", number);
+	// printf("find_position: number %d not found, returning -1\n", number);
 	return (-1);
 }
 
-// int	find_target_position(t_stack_node *b, int number)
-// {
-// 	t_stack_node	*current;
-// 	int	smallest;
-// 	int	largest;
-// 	int	position;
-
-// 	if (!b)
-// 		return (-1);
-// 	smallest = find_smallest(b);
-// 	largest = find_largest(b);
-// 	position = 0;
-// 	if (number > largest || number < smallest)
-// 	{
-// 		printf("target position: %d\n", (position));
-// 		return (position);
-// 	}
-	
-// 	current = b;
-// 	while (current && current->next)
-// 	{
-// 		if (number < current->data && number > current->next->data)
-// 		{
-// 			printf("target position: %d\n", (position + 1));
-// 			return (position + 1);
-// 		}
-// 		current = current->next;
-// 		position++;
-// 	}
-// 	// Case 4: Wrap-around (number fits between last and first nodes)
-//     if (current && number < current->data && number > current->data)
-//     {
-//         printf("target position: %d (wrap-around between %d and %d)\n", position + 1, current->data, b->data);
-//         return (position + 1);
-//     }
-// 	printf("target position 0");
-// 	return (position);
-// }
-
 int find_target_position(t_stack_node *b, int number)
 {
- t_stack_node *current;
- int smallest;
- int largest;
- int position;
+	t_stack_node *current;
+	int smallest;
+	int largest;
+	int position;
 
- if (!b)
-  return (-1);
- smallest = find_smallest(b);
- largest = find_largest(b);
- if (number > largest || number < smallest)
- {
-  int p = find_position(b, smallest);
-  // printf("target position: %d\n", (position));
-  if (p + 1 == stack_len(b))
-   return (0);
-  else
-   return (p + 1);
- }
- 
- current = b;
- position = 0;
- int min_diff = INT_MAX;
- int best_position = 0;
- while (current)
- {
-  // if (number < current->data && number > current->next->data)
-  // {
-  //  printf("target position: %d\n", (position + 1));
-  //  return (position + 1);
-  // }
-  if (number > current->data && (number - current->data) < min_diff)
-  {
-   min_diff = number - current->data;
-   best_position = position;
-  }
-  current = current->next;
-  position++;
- }
- // Case 4: Wrap-around (number fits between last and first nodes)
-    // if (current && number < current->data && number > current->data)
-    // {
-    //     printf("target position: %d (wrap-around between %d and %d)\n", position + 1, current->data, b->data);
-    //     return (position + 1);
-    // }
- // printf("target position 0");
- return (best_position);
+	if (!b)
+		return (-1);
+	smallest = find_smallest(b);
+	largest = find_largest(b);
+	if (number > largest || number < smallest)
+	{
+		int p = find_position(b, smallest);
+		// printf("target position: %d\n", (position));
+		if (p + 1 == stack_len(b))
+			return (0);
+		else
+			return (p + 1);
+	}
+
+	current = b;
+	position = 0;
+	int min_diff = INT_MAX;
+	int best_position = 0;
+	while (current)
+	{
+		if (number > current->data && (number - current->data) < min_diff)
+		{
+			min_diff = number - current->data;
+			best_position = position;
+		}
+		current = current->next;
+		position++;
+	}
+	return (best_position);
 }
 

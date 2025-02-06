@@ -10,10 +10,10 @@ int	calculate_rotations_a(t_stack_node *stack, int number)
 	if (position == -1)
 		return (-1);
 	size = stack_len(stack);
-	if (position <= size / 2)
+	if (position < (size + 1) / 2)
 		rotations = position;
 	else
-	rotations = -(size - position);
+		rotations = -(size - position);
 	printf("rotations number %d for number %d\n", rotations, number);
 	return (rotations);
 }
@@ -29,7 +29,7 @@ int calculate_rotations_b(t_stack_node *stack, int target_position)
 		printf("Error: Invalid target position %d for stack size %d\n", target_position, size);
 		return (-1);
 	}
-	if (target_position <= size / 2)
+	if (target_position < (size + 1) / 2)
 		rotations = target_position;
 	else
 		rotations = -(size - target_position);
@@ -61,18 +61,22 @@ void	calculate_cost(t_stack_node *a, t_stack_node *b)
 		}
 		cost_a = calculate_rotations_a(a, current_a->data);
 		cost_b = calculate_rotations_b(b, target_position);
-		printf("cost A: %d\n", cost_a);
-		printf("cost B: %d\n", cost_b);
+		// printf("cost A: %d\n", cost_a);
+		// printf("cost B: %d\n", cost_b);
 
 		if (cost_a != INT_MAX && cost_b != INT_MAX)
 		{
 			if ((cost_a > 0 && cost_b > 0) || (cost_a < 0 && cost_b < 0))
 			{
+				if (cost_a < 0 && cost_b < 0) {
+					cost_a = -cost_a;
+					cost_b = -cost_b;
+				}
 				if (cost_a > cost_b)
 					total_cost = cost_a;
 				else
 					total_cost = cost_b;
-				printf("Simultaneous rotation, total cost: %d\n", total_cost);	
+				// printf("Simultaneous rotation, total cost: %d\n", total_cost);	
 			}
 			else
 			{
@@ -81,8 +85,9 @@ void	calculate_cost(t_stack_node *a, t_stack_node *b)
 				if (cost_b < 0)
 					cost_b = -cost_b;
 				total_cost = cost_a + cost_b;
-				printf("Separate rotations, total cost: %d\n", total_cost);
+				// printf("Separate rotations, total cost: %d\n", total_cost);
 			}
+			printf("total cost: %d\n", total_cost);
 			current_a->push_cost = total_cost;
 		}
 		else
@@ -112,7 +117,7 @@ t_stack_node *find_cheapest_move(t_stack_node *a)
 		}
 		current = current->next;
 	}
-	printf("cheapest number:%d\n", cheapest->data);
+	// printf("cheapest number:%d\n", cheapest->data);
 	return (cheapest);
 }
 
@@ -130,6 +135,12 @@ void bring_target_to_top(t_stack_node **b, int target_position)
 		while (rotations++ < 0)
 			reverse_rotate(b, 'b');
 	}
+}
+
+void	repeat(t_stack_node **stack, char stack_name, void (*f)(t_stack_node **, char), int times)
+{
+	while (times--)
+		f(stack, stack_name);
 }
 
 void	push_cheapest_node(t_stack_node **a, t_stack_node **b)
@@ -159,15 +170,19 @@ void	push_cheapest_node(t_stack_node **a, t_stack_node **b)
 		}
 		else if (cost_a > 0)
 		{
-			rotate(a, 'a');
+			repeat(a, 'a', rotate, cost_a);
+			// rotate(a, 'a');
 			if (cost_b < 0)
-				reverse_rotate(b, 'b');
+				repeat(b, 'b', reverse_rotate, -cost_b);
+				// reverse_rotate(b, 'b');
 		}
 		else if (cost_b > 0)
 		{
-			rotate(b, 'b');
+			repeat(b, 'b', rotate, cost_b);
+			// rotate(b, 'b');
 			if (cost_a < 0)
-				reverse_rotate(a, 'a');
+				repeat(a, 'a', reverse_rotate, -cost_a);
+				// reverse_rotate(a, 'a');
 		}
 		else
 		{

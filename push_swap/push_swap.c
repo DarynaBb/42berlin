@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 	t_stack_node *temp = b;
     while (temp)
     {
-        write(1, "B-Element: \n", 9);
+        // write(1, "B-Element: \n", 9);
         ft_putnbr_fd(temp->data, 1); // Replace with your number printing function
         write(1, "\n", 1);
         temp = temp->next;
