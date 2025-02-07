@@ -98,3 +98,57 @@ int find_target_position(t_stack_node *b, int number)
 	return (best_position);
 }
 
+int find_target_position_asc(t_stack_node *stack, int number)
+{
+	t_stack_node *current;
+	int smallest;
+	int largest;
+	int position;
+	int	p;
+
+	if (!stack)
+		return (-1);
+	smallest = find_smallest(stack);
+	largest = find_largest(stack);
+	if (number < smallest)
+		{
+			p = find_position(stack, smallest);
+			if ( p != 0)
+				return (p);
+			else
+				return (0);
+		}
+	if (number > largest)
+	{
+		p = find_position(stack, largest);
+		if (p + 1 == stack_len(stack))
+			return (0);
+		else
+			return (p + 1);
+	}
+	// if (number > largest || number < smallest)
+	// {
+	// 	int p = find_position(b, largest);
+	// 	// printf("target position: %d\n", (position));
+	// 	if (p + 1 == stack_len(b))
+	// 		return (0);
+	// 	else
+	// 		return (p + 1);
+	// }
+
+	current = stack;
+	position = 0;
+	int min_diff = INT_MAX;
+	int best_position = 0;
+	while (current)
+	{
+		if (number < current->data && (current->data - number) < min_diff)
+		{
+			min_diff = current->data - number;
+			best_position = position;
+		}
+		current = current->next;
+		position++;
+	}
+	return (best_position);
+}

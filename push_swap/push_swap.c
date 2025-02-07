@@ -15,20 +15,20 @@ int main(int argc, char **argv)
 	sort(&a, &b);
 
 	// printf("Stack A:\n");
-	t_stack_node *current = a;
-	while (current)
-	{
-		// printf("%d\n", current->data);
-		current = current->next;
-	}
+	// t_stack_node *current = a;
+	// while (current)
+	// {
+	// 	printf("%d\n", current->data);
+	// 	current = current->next;
+	// }
 
 	// printf("Stack B:\n");
-	t_stack_node *temp = b;
-	while (temp)
-	{
-		// printf("%d\n", temp->data);
-		temp = temp->next;
-	}
+	// t_stack_node *temp = b;
+	// while (temp)
+	// {
+	// 	printf("%d\n", temp->data);
+	// 	temp = temp->next;
+	// }
 	free(a);
 	return 0;
 }

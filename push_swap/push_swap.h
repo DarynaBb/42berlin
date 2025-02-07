@@ -52,12 +52,14 @@ int	find_smallest(t_stack_node *stack);
 int	find_largest(t_stack_node *stack);
 int	find_position(t_stack_node *stack, int number);
 int	find_target_position(t_stack_node *b, int number);
+int find_target_position_asc(t_stack_node *stack, int number);
 
 // Algorithm - push cheaoest node
 // int	calculate_rotations(t_stack_node *stack, int number);
 void	calculate_cost(t_stack_node *a, t_stack_node *b);
 void	push_cheapest_node(t_stack_node **a, t_stack_node **b);
-void	bring_target_to_top(t_stack_node **b, int target_position);
+void	bring_target_to_top(t_stack_node **b, int target_position, char stack_name);
+void	push_cheapest_node_into_a(t_stack_node **a, t_stack_node **b);
 
 // Test
 void	sort(t_stack_node **a, t_stack_node **b);
