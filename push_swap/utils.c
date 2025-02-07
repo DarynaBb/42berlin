@@ -63,14 +63,40 @@ long ft_atol(const char *str)
 	return (num * sign);
 }
 
-int	is_sorted(t_stack_node *a)
+int	is_sorted(t_stack_node *stack)
 {
 	t_stack_node *current;
-	current = a;
+	current = stack;
 	while (current && current->next)
 	{
 		if (current->data > current->next->data)
 			return (0);
+		current = current->next;
+	}
+	return (1);
+}
+
+int	is_sorted_desc(t_stack_node *stack)
+{
+	t_stack_node	*current;
+	t_stack_node	*rotation_start;
+	current = stack;
+	if (!stack || !stack->next)
+		return (1);
+	while (current->next)
+	{
+		if (current->data < current->next->data)
+		{
+			rotation_start = current->next;
+			while(rotation_start->next)
+			{
+				if (rotation_start->data < rotation_start->next->data)
+					return (0);
+				rotation_start = rotation_start->next;
+			}
+			if (rotation_start->data < stack->data)
+				return (0);
+		}
 		current = current->next;
 	}
 	return (1);

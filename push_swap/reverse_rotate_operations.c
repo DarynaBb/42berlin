@@ -18,13 +18,6 @@ void	reverse_rotate(t_stack_node **stack, char stack_name)
 		write(1, "rrb\n", 4);
 }
 
-// void	reverse_rotate_both(t_stack_node **a, t_stack_node **b)
-// {
-// 	reverse_rotate(a, 0);
-// 	reverse_rotate(b, 0);
-// 	write(1, "rrr\n", 4);
-// }
-
 void reverse_rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, int rotations_b)
 {
     while (rotations_a > 0 && rotations_b > 0)

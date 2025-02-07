@@ -41,10 +41,3 @@ void rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, int rotati
         rotations_b--;
     }
 }
-
-// void	rotate_both(t_stack_node **a, t_stack_node **b)
-// {
-// 	rotate(a, 0);
-// 	rotate(b, 0);
-// 	write(1, "rr\n", 3);
-// }

@@ -29,8 +29,9 @@ t_stack_node	*validate_arguments(int argc, char **argv);
 // Utils
 long ft_atol(const char *str);
 void ft_putnbr_fd(int n, int fd);
-int	is_sorted(t_stack_node *a);
+int	is_sorted(t_stack_node *stack);
 int stack_len(t_stack_node *stack);
+int	is_sorted_desc(t_stack_node *stack);
 
 // Operations
 void	swap(t_stack_node **stack, char stack_name);
@@ -56,6 +57,7 @@ int	find_target_position(t_stack_node *b, int number);
 // int	calculate_rotations(t_stack_node *stack, int number);
 void	calculate_cost(t_stack_node *a, t_stack_node *b);
 void	push_cheapest_node(t_stack_node **a, t_stack_node **b);
+void	bring_target_to_top(t_stack_node **b, int target_position);
 
 // Test
 void	sort(t_stack_node **a, t_stack_node **b);

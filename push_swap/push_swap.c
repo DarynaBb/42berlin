@@ -2,50 +2,35 @@
 
 int main(int argc, char **argv)
 {
-    t_stack_node *a = NULL;
-    t_stack_node *b = NULL;
+	t_stack_node *a = NULL;
+	t_stack_node *b = NULL;
 
-    // Assuming validate_arguments is correctly setting up stack a
-    a = validate_arguments(argc - 1, argv + 1);
+	a = validate_arguments(argc - 1, argv + 1);
 	if (!a)
-    {
-        printf("Stack initialization failed.\n");
-        return (1);
-    }
+	{
+		// printf("Stack initialization failed.\n");
+		return (1);
+	}
 
-    // Call ra function to rotate stack a
-    // swap(&a);
-	// rotate(&a);
-	// reverse_rotate(&a);
-	// sort_two(&a);
-	// swap(&a, 'a');
-	// sort_three(&a);
-	// find_smallest(a);
-	// find_largest(a);
-	// find_position(a, 15);
-	// find_target_position(a, 15);
-    sort(&a, &b);
-    // calculate_rotations(a, 15);
-    
-    // calculate_cost(a, b);
+	sort(&a, &b);
 
-    printf("Initial Stack A:\n");
-    t_stack_node *current = a;
-    while (current)
-    {
-        printf("Data: %d\n", current->data);
-        current = current->next;
-    }
+	// printf("Stack A:\n");
+	t_stack_node *current = a;
+	while (current)
+	{
+		// printf("%d\n", current->data);
+		current = current->next;
+	}
+
+	// printf("Stack B:\n");
 	t_stack_node *temp = b;
-    while (temp)
-    {
-        // write(1, "B-Element: \n", 9);
-        ft_putnbr_fd(temp->data, 1); // Replace with your number printing function
-        write(1, "\n", 1);
-        temp = temp->next;
-    }
-
-    return 0;
+	while (temp)
+	{
+		// printf("%d\n", temp->data);
+		temp = temp->next;
+	}
+	free(a);
+	return 0;
 }
 // int main(int argc, char **argv)
 // {

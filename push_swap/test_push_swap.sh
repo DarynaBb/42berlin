@@ -22,9 +22,9 @@ for ((i=1; i<=TESTS; i++)); do
 
 	numbers_str="${numbers[@]}"
 
-	echo "Test $i: $numbers_str"
-	# COUNT=$(./push_swap $numbers_str | wc -l | tr -d ' ')
-	# CHECKER=$(./push_swap $numbers_str | ./checker $numbers_str)
+	# echo "Test $i: $numbers_str"
+	COUNT=$(./push_swap $numbers_str | wc -l | tr -d ' ')
+	CHECKER=$(./push_swap $numbers_str | ./checker_Mac $numbers_str)
 
 	TOTAL=$((TOTAL + COUNT))
 	if [ $COUNT -gt $MAX ]; then MAX=$COUNT; fi
