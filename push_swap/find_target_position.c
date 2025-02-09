@@ -126,16 +126,6 @@ int find_target_position_asc(t_stack_node *stack, int number)
 		else
 			return (p + 1);
 	}
-	// if (number > largest || number < smallest)
-	// {
-	// 	int p = find_position(b, largest);
-	// 	// printf("target position: %d\n", (position));
-	// 	if (p + 1 == stack_len(b))
-	// 		return (0);
-	// 	else
-	// 		return (p + 1);
-	// }
-
 	current = stack;
 	position = 0;
 	int min_diff = INT_MAX;

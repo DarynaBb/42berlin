@@ -1,5 +1,33 @@
 #include "push_swap.h"
 
+void	sort(t_stack_node **a, t_stack_node **b)
+{
+	int	smallest;
+	
+	if (is_sorted(*a))
+		return ;
+	if (stack_len(*a) == 3)
+	{
+		sort_three(a);
+		return ;
+	}
+	if (stack_len(*a) == 2)
+	{
+		sort_two(a);
+		return ;
+	}
+	else
+	{
+		pb(a, b);
+		pb(a, b);
+		push_cheapest_node_into_b(a, b);
+		sort_three(a);
+		push_cheapest_node_into_a(a, b);
+		smallest = find_smallest(*a);
+		bring_target_to_top(a, find_position(*a, smallest), 'a');
+	}
+}
+
 int main(int argc, char **argv)
 {
 	t_stack_node *a = NULL;
@@ -8,13 +36,16 @@ int main(int argc, char **argv)
 	a = validate_arguments(argc - 1, argv + 1);
 	if (!a)
 	{
-		// printf("Stack initialization failed.\n");
-		return (1);
+		free_stack(a);
+		print_error_and_exit();
 	}
-
 	sort(&a, &b);
+	free_stack(a);
+	free_stack(b);
+	return 0;
+}
 
-	// printf("Stack A:\n");
+// printf("Stack A:\n");
 	// t_stack_node *current = a;
 	// while (current)
 	// {
@@ -29,64 +60,3 @@ int main(int argc, char **argv)
 	// 	printf("%d\n", temp->data);
 	// 	temp = temp->next;
 	// }
-	free(a);
-	return 0;
-}
-// int main(int argc, char **argv)
-// {
-// 	t_stack_node	*a;
-// 	t_stack_node	*b;
-
-// 	a = NULL;
-// 	b = NULL;
-
-// 	a = validate_arguments(argc - 1, argv + 1);
-	// t_stack_node *current = a;
-	// while (current)
-	// {
-	// 	write(1, "Element: ", 9);
-	// 	ft_putnbr_fd(current->data, 1); // Replace with your number printing function
-	// 	write(1, "\n", 1);
-	// 	current = current->next;
-	// }
-	// write(1, "Stack B:\n", 9);
-    // current = b;
-    // while (current)
-    // {
-    //     ft_putnbr_fd(current->data, 1);
-    //     write(1, "\n", 1);
-    //     current = current->next;
-    // }
-	// if (is_sorted(a))
-    // {
-    //     write(1, "Stack A is already sorted.\n", 26);
-    //     return (0);  // Exit early if sorted
-    // }
-	// ra(&a);
-	// return (0);
-// }
-
-// int main(int argc, char **argv)
-// {
-// 	t_stack_node	*a;
-// 	t_stack_node	*b;
-
-// 	a = NULL;
-// 	b = NULL;
-// 	if(argc == 1 || argc == 2 && !argv[1][0])
-// 		return (1);
-// 	else if (argc == 2)
-// 		argv = ft_split(argv[1], ' ');
-// 	init_stack_a(&a, argv + 1);
-// 	if (!stack_sorted(a))
-// 	{
-// 		if (stack_len(a) == 2)
-// 			sa(&a, false);
-// 		else if (stack_len(a) == 3)
-// 			sort_three(&a);
-// 		else
-// 			sort_stacks(&a, &b);
-// 	}
-// 	free_stack(&a);
-// 	return (0);
-// }

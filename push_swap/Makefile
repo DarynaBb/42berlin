@@ -4,7 +4,9 @@ NAME = push_swap
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 SRC = algorithm_calculate_rotations.c \
-			algorithm_find_target_position.c \
+			calc_cost_desc.c\
+			calc_cost_asc.c\
+			find_target_position.c \
 			errors.c \
 			push_operations.c \
 			push_swap.c \
@@ -12,9 +14,8 @@ SRC = algorithm_calculate_rotations.c \
 			rotate_operations.c \
 			sorted_func.c \
 			swap_operations.c \
-			test.c \
 			utils.c \
-			validate_arguments.c
+			validate_arg_and_create_stack.c
 # Object files
 # automatically generates the names of the object files from the source files
 OBJ = $(SRC:.c=.o)

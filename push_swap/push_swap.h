@@ -10,17 +10,12 @@
 typedef struct s_stack_node
 {
 	int		data;
-	int		index;
 	int		push_cost;
-	bool	above_median;
-	bool	cheapest;
-
-	struct s_stack_node *target_node;
 	struct s_stack_node *next;
-	// struct s_stack_node *prev;
 } t_stack_node;
 
 //Errors
+void free_stack(t_stack_node *stack);
 void print_error_and_exit(void);
 
 // Validate arguments
@@ -47,6 +42,17 @@ void	reverse_rotate_both(t_stack_node **a, t_stack_node **b, int rotations_a, in
 void	sort_two(t_stack_node **stack);
 void	sort_three(t_stack_node **stack);
 
+// Calc cost descending
+int		calculate_rotations_a_desc(t_stack_node *stack, int number);
+void	calculate_cost_desc(t_stack_node *a, t_stack_node *b);
+int		calculate_rotations_b_desc(t_stack_node *stack, int target_position);
+
+// Calc cost ascending
+int		calculate_rotations_a_asc(t_stack_node *stack, int target_position);
+int		calculate_rotations_b_asc(t_stack_node *stack, int number);
+void	calculate_cost_asc(t_stack_node *a, t_stack_node *b);
+
+
 // Algorithm - find target position
 int	find_smallest(t_stack_node *stack);
 int	find_largest(t_stack_node *stack);
@@ -56,8 +62,8 @@ int find_target_position_asc(t_stack_node *stack, int number);
 
 // Algorithm - push cheaoest node
 // int	calculate_rotations(t_stack_node *stack, int number);
-void	calculate_cost(t_stack_node *a, t_stack_node *b);
-void	push_cheapest_node(t_stack_node **a, t_stack_node **b);
+// void	calculate_cost(t_stack_node *a, t_stack_node *b);
+void	push_cheapest_node_into_b(t_stack_node **a, t_stack_node **b);
 void	bring_target_to_top(t_stack_node **b, int target_position, char stack_name);
 void	push_cheapest_node_into_a(t_stack_node **a, t_stack_node **b);
 

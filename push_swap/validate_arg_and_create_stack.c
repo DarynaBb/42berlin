@@ -35,31 +35,35 @@ int	is_duplicate(t_stack_node *a, int value)
 	return (0);
 }
 
-t_stack_node	*create_stack_node(int value)
+t_stack_node	*create_stack_node(t_stack_node *stack, int value)
 {
 	t_stack_node	*new_node;
 
 	new_node = malloc(sizeof(t_stack_node));
 	if (!new_node)
+	{
+		free_stack(stack);
 		print_error_and_exit();
+	}
 	new_node->data = value;
-	new_node->index = 0;
-	new_node->above_median = 0;
-	new_node->cheapest = 0;
-	new_node->target_node = NULL;
 	new_node->next = NULL;
 	return (new_node);
 }
 
-void	append_to_stack(t_stack_node **a, t_stack_node *new_node)
+void	append_to_stack(t_stack_node **stack, t_stack_node *new_node)
 {
 	t_stack_node	*current;
 
-	if (!*a)
-		*a = new_node;
+	if (!new_node)
+	{
+		free_stack(*stack);
+		print_error_and_exit();
+	}
+	if (!*stack)
+		*stack = new_node;
 	else
 	{
-		current = *a;
+		current = *stack;
 		while (current->next)
 		{
 			current = current->next;
@@ -77,15 +81,21 @@ t_stack_node	*validate_arguments(int argc, char **argv)
 	a = NULL;
 	i = 0;
 	if (argc < 2)
-		exit(1);
-	if (!arguments_are_integers(argv))
 		print_error_and_exit();
+	if (!arguments_are_integers(argv))
+	{
+		free_stack(a);
+		print_error_and_exit();
+	}
 	while (i < argc)
 	{
 		value = (int)ft_atol(argv[i]);
 		if (is_duplicate(a, value))
+		{
+			free_stack(a);
 			print_error_and_exit();
-		append_to_stack(&a, create_stack_node(value));
+		}
+		append_to_stack(&a, create_stack_node(a, value));
 		i++;
 	}
 	return (a);
