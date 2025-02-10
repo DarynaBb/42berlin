@@ -33,6 +33,8 @@ int	main(int argc, char **argv)
 	t_stack_node	*a;
 	t_stack_node	*b;
 
+	if (argc < 2)
+		exit(0);
 	b = NULL;
 	a = validate_arguments(argc - 1, argv + 1);
 	if (!a)
@@ -41,21 +43,6 @@ int	main(int argc, char **argv)
 		print_error_and_exit();
 	}
 	sort(&a, &b);
-	// printf("Stack A:\n");
-	// t_stack_node *current = a;
-	// while (current)
-	// {
-	// 	printf("%d\n", current->data);
-	// 	current = current->next;
-	// }
-
-	// printf("Stack B:\n");
-	// t_stack_node *temp = b;
-	// while (temp)
-	// {
-	// 	printf("%d\n", temp->data);
-	// 	temp = temp->next;
-	// }
 	free_stack(a);
 	free_stack(b);
 	return (0);

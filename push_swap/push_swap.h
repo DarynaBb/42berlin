@@ -21,6 +21,7 @@ void			print_error_and_exit(void);
 // Validate arguments
 t_stack_node	*validate_arguments(int argc, char **argv);
 
+
 // Utils
 long			ft_atol(const char *str);
 void			ft_putnbr_fd(int n, int fd);
@@ -55,6 +56,9 @@ int				calculate_rotations_a_asc(t_stack_node *stack,
 int				calculate_rotations_b_asc(t_stack_node *stack, int number);
 void			calculate_cost_asc(t_stack_node *a, t_stack_node *b);
 
+// Calculate push cost
+int				calculate_push_cost(int cost_a, int cost_b);
+
 // Algorithm - find target position
 int				find_smallest(t_stack_node *stack);
 int				find_largest(t_stack_node *stack);
@@ -67,20 +71,11 @@ void			push_cheapest_node_into_b(t_stack_node **a, t_stack_node **b);
 void			bring_target_to_top(t_stack_node **b,
 					int target_position, char stack_name);
 void			push_cheapest_node_into_a(t_stack_node **a, t_stack_node **b);
+void			repeat(t_stack_node **stack, char stack_name,
+					void (*f)(t_stack_node **, char), int times);
+t_stack_node	*find_cheapest_move(t_stack_node *stack);
 
 // Test
 void			sort(t_stack_node **a, t_stack_node **b);
-
-// //Handle errors
-
-//Stack initiation
-
-//Nodes initiation
-
-//Stack utils
-
-//Commands
-
-//Algorithms
 
 #endif

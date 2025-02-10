@@ -3,10 +3,13 @@ NAME = push_swap
 # Compiler and flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRC = algorithm_calculate_rotations.c \
+SRC = utils_calculate_rotations.c \
+			find_position.c\
+			push_nodes_into_stack.c\
 			calc_cost_desc.c\
 			calc_cost_asc.c\
-			find_target_position.c \
+			find_target_position_desc.c \
+			find_target_position_asc.c \
 			errors.c \
 			push_operations.c \
 			push_swap.c \
@@ -14,7 +17,7 @@ SRC = algorithm_calculate_rotations.c \
 			rotate_operations.c \
 			sorted_func.c \
 			swap_operations.c \
-			utils.c \
+			utils_validation.c \
 			validate_arg_and_create_stack.c
 # Object files
 # automatically generates the names of the object files from the source files

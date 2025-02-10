@@ -80,8 +80,6 @@ t_stack_node	*validate_arguments(int argc, char **argv)
 
 	a = NULL;
 	i = 0;
-	if (argc < 2)
-		print_error_and_exit();
 	if (!arguments_are_integers(argv))
 	{
 		free_stack(a);
