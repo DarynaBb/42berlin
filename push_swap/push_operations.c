@@ -5,7 +5,7 @@ void	pa(t_stack_node **a, t_stack_node **b)
 	t_stack_node	*top_b;
 
 	if (!*b)
-		return;
+		return ;
 	top_b = *b;
 	*b = top_b->next;
 	top_b->next = *a;
@@ -18,7 +18,7 @@ void	pb(t_stack_node **a, t_stack_node **b)
 	t_stack_node	*top_a;
 
 	if (!*a)
-		return;
+		return ;
 	top_a = *a;
 	*a = top_a->next;
 	top_a->next = *b;

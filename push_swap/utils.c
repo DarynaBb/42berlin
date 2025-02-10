@@ -36,7 +36,7 @@ void	ft_putnbr_fd(int n, int fd)
 		write(fd, &str[i], 1);
 }
 
-long ft_atol(const char *str)
+long	ft_atol(const char *str)
 {
 	int		i;
 	int		sign;
@@ -65,38 +65,13 @@ long ft_atol(const char *str)
 
 int	is_sorted(t_stack_node *stack)
 {
-	t_stack_node *current;
+	t_stack_node	*current;
+
 	current = stack;
 	while (current && current->next)
 	{
 		if (current->data > current->next->data)
 			return (0);
-		current = current->next;
-	}
-	return (1);
-}
-
-int	is_sorted_desc(t_stack_node *stack)
-{
-	t_stack_node	*current;
-	t_stack_node	*rotation_start;
-	current = stack;
-	if (!stack || !stack->next)
-		return (1);
-	while (current->next)
-	{
-		if (current->data < current->next->data)
-		{
-			rotation_start = current->next;
-			while(rotation_start->next)
-			{
-				if (rotation_start->data < rotation_start->next->data)
-					return (0);
-				rotation_start = rotation_start->next;
-			}
-			if (rotation_start->data < stack->data)
-				return (0);
-		}
 		current = current->next;
 	}
 	return (1);
@@ -112,6 +87,5 @@ int	stack_len(t_stack_node *stack)
 		stack_len++;
 		stack = stack->next;
 	}
-	// printf("Stack length:%d\n", stack_len);
 	return (stack_len);
 }
