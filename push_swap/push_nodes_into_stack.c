@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_nodes_into_stack.c                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbilenko <dbilenko@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:12:31 by dbilenko          #+#    #+#             */
+/*   Updated: 2025/02/10 14:12:34 by dbilenko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	align_stacks(t_stack_node **a, t_stack_node **b, int cost_a, int cost_b)

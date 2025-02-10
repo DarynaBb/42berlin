@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbilenko <dbilenko@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/10 14:14:55 by dbilenko          #+#    #+#             */
+/*   Updated: 2025/02/10 14:14:58 by dbilenko         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
@@ -20,7 +32,6 @@ void			print_error_and_exit(void);
 
 // Validate arguments
 t_stack_node	*validate_arguments(int argc, char **argv);
-
 
 // Utils
 long			ft_atol(const char *str);
