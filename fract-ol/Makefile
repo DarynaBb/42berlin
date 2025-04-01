@@ -3,17 +3,22 @@ NAME = fractol
 # Compiler and flags
 CC = cc
 # CFLAGS = -Wall -Wextra -Werror
-CFLAGS = -Wall -Wextra -Werror -I$(shell pkg-config --cflags x11)
-LDFLAGS = -L$(shell pkg-config --libs x11)
+CFLAGS = -Imlx -I$(shell pkg-config --cflags x11)
+LDFLAGS = -Lmlx -lmlx -L/opt/homebrew/opt/libx11/lib -L/opt/X11/lib \
+          -lX11 -lXext -lm -framework OpenGL -framework AppKit
 
 LIBFT_DIR = libft
 LIBFT = $(LIBFT_DIR)/libft.a
 LIBMLX_DIR=mlx
-LIBMLX_NAME=mlx.a
+LIBMLX_NAME=$(LIBMLX_DIR)/mlx.a
 SRC = main.c \
-		# execute.c\
-		# path_utils.c\
-		# pipex_utils.c\
+		rendering/julia.c \
+		rendering/mandelbrot.c \
+		rendering/render.c \
+		utils/color.c \
+		utils/complex.c \
+		hooks/keyboard.c \
+		hooks/mouse.c \
 
 
 # Object files
@@ -21,7 +26,7 @@ SRC = main.c \
 OBJ = $(SRC:.c=.o)
 
 HEADER = fractol.h
-LIBS = -Llibft -lft -Lmlx -lmlx -L/opt/X11/lib -lX11 -lXext -lm -framework OpenGL -framework AppKit
+# LIBS = -Llibft -lft -Lmlx -lmlx -lX11 -lXext -lm -framework OpenGL -framework AppKit
 
 # Colors for better readability
 GREEN = \033[0;32m
@@ -40,7 +45,7 @@ $(LIBMLX_NAME):
 	make -C $(LIBMLX_DIR)
 
 $(NAME): $(OBJ) $(LIBFT) $(LIBMLX_NAME)
-	@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_DIR) -lft -L$(LIBMLX_DIR) -lmlx -L/opt/X11/lib -lX11 -lXext -lm
+	@$(CC) $(CFLAGS) $(LDFLAGS) $(OBJ) -o $(NAME) -L$(LIBFT_DIR) -lft -L$(LIBMLX_DIR) -lmlx
 	@echo "$(GREEN)Program $(NAME) created!$(RESET)"
 	
 %.o: %.c $(HEADER)

@@ -6,101 +6,99 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdint.h>
-#include <X11/keysym.h>
+# include <X11/keysym.h>
+# include <X11/X.h>
 
-# define WIDTH 1000
-# define HEIGHT 800
+# include <stdio.h>
 
-# define ISOMETRIC_ANGLE 35.264
+# define WIDTH 800
+# define HEIGHT 600
+# define MAX_ITER 200
+# define ZOOM_FACTOR 1.2
+# define X_MIN -2.0// Left bound of the complex plane
+# define X_MAX 2.0// Right bound of the complex plane
+# define Y_MIN -1.5// Bottom bound (imaginary part)
+# define Y_MAX 1.5// Top bound (imaginary part)
+# define COLOR_TABLE_SIZE 256
 
-typedef struct s_color
+
+// # define SIDE_LEN 800
+// # define ISOMETRIC_ANGLE 35.264
+
+//Complex number operations
+typedef struct	s_complex
 {
-	uint32_t	pos_colors[5];
-	uint32_t	neg_colors[5];
-	double		thresholds[5];
-}	t_color;
+	double	real;
+	double	imag;
+}	t_complex;
 
-typedef struct s_point
-{
-	double	x;
-	double	y;
-	double	z;
-	int		color;
-}	t_point;
+t_complex	complex_add(t_complex a, t_complex b);
+t_complex	complex_multiply(t_complex a, t_complex b);
+double		complex_modulus_squared(t_complex c);
+t_complex	complex_square(t_complex c);
 
-typedef enum e_projection
-{
-	ISOMETRIC,
-	PERSPECTIVE,
-	SIDEWAYS
-}	t_projection;
 
-typedef struct s_img
+//Fractal structure
+typedef struct	s_img
 {
-	void	*img;
+	void	*img_ptr;
 	char	*addr;
 	int		bpp;
 	int		line_length;
 	int		endian;
 }	t_img;
 
-typedef struct s_line
+typedef enum e_fractal_type
 {
-	double	dx;
-	double	dy;
-	double	steps;
-	double	x_inc;
-	double	y_inc;
-	double	x;
-	double	y;
-}	t_line;
+	MANDELBROT,
+	JULIA
+}	t_fractal_type;
 
-typedef struct s_fdf
+typedef struct	s_fractal
 {
 	void			*mlx;
-	void			*win;
-	t_img			img;
-	t_projection	projection_type;
-	t_point			**map;
-	int				colored;
-	int				map_width;
-	int				map_height;
-	int				map_max;
-	int				zoom;
-	int				offset_x;
-	int				offset_y;
-	int				altitude;
-	double			angle_x;
-	double			angle_y;
-	double			angle_z;
-	double			angle;
-}	t_fdf;
+	void			*window;
+	t_img			*img;
+	double			zoom;
+	double			center_x;
+	double			center_y;
+	t_fractal_type	type;
+	t_complex		julia_c;
+	double			x_min;
+	double			x_max;
+	double			y_min;
+	double			y_max;
+	int				zoom_level;
+	int				pending_zoom;
+	int				pending_shift;
 
-typedef struct s_mlx_data
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-}	t_mlx_data;
+}	t_fractal;
 
+// Hooks:
 
+//keyboard
+int		handle_esc(int keycode, t_fractal *fr);
+int		handle_close(t_fractal *fr);
+int		handle_shift(int keycode, t_fractal *fr);
+void	process_shift(t_fractal *fr);
 
+//mouse
+int	handle_mouse(int button, int x, int y, t_fractal *fr);
 
-// uint32_t	interpolate_color(uint32_t color1, uint32_t color2, double f);
-// uint32_t	get_terrain_color(int z, int z_min, int z_max);
-// int			handle_key(int key, t_fdf *data);
-// int			handle_mouse(int button, int x, int y, t_fdf *data);
-// void		draw_wireframe(t_fdf *data);
-// void		draw_line(t_fdf *data, t_point p1, t_point p2);
-// void		parse_map(char *filename, t_fdf *data);
-// void		parse_dimensions(char *filename, t_fdf *data);
-// t_point		project_point(t_point point, t_fdf *data);
-// void		render(t_fdf *data);
-// void		exit_error(char *message, int fd);
-// int			close_window(t_fdf *data);
-// int			min(int a, int b);
-// int			max(int a, int b);
-// double		degrees_to_radians(double degrees);
-// int			hex_to_int(char *str);
-// void		set_defaults(t_fdf *data);
+void process_zoom(t_fractal *fr);
+
+// Rendering:
+
+void	render_fractal(t_fractal *fr);
+int render_loop(t_fractal *fr);
+// Mandelbrot
+int	mandelbrot(t_complex c, int zoom_level);
+// Julia
+int	julia(t_complex z, t_complex c, int zoom_level);
+
+// Color:
+void init_palette();
+int	get_color (int i, int max_iter);
+int	get_color_fast(int i);
 
 #endif
