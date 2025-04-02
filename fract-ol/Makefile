@@ -14,12 +14,15 @@ LIBMLX_NAME=$(LIBMLX_DIR)/mlx.a
 SRC = main.c \
 		rendering/julia.c \
 		rendering/mandelbrot.c \
+		rendering/sierpinski.c \
+		rendering/burning_ship.c \
 		rendering/render.c \
 		utils/color.c \
 		utils/complex.c \
+		utils/parse_args.c \
+		utils/ft_atof.c \
 		hooks/keyboard.c \
 		hooks/mouse.c \
-
 
 # Object files
 # automatically generates the names of the object files from the source files

@@ -1,6 +1,6 @@
 #include "../fractol.h"
 
-int	mandelbrot(t_complex c)
+int	burning_ship(t_complex c)
 {
 	int	i;
 	t_complex	z;
@@ -11,7 +11,10 @@ int	mandelbrot(t_complex c)
 
 	while(i < MAX_ITER && complex_modulus_squared(z) < 4.0)
 	{
-		z = complex_add(complex_multiply(z, z), c);
+		z.real = fabs(z.real);
+		z.imag = fabs(z.imag);
+		z = complex_multiply(z, z);
+		z = complex_add(z, c);
 		i++;
 	}
 	return i;

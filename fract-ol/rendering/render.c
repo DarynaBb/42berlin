@@ -9,6 +9,11 @@ void	render_fractal(t_fractal *fr)
 	int			color;
 	int			offset;
 	
+	if (fr->type == SIERPINSKI)
+	{
+		sierpinski(fr->img, WIDTH / 2, HEIGHT - 20, WIDTH / 2, 5);
+		return;  // **Exit the function after drawing the Sierpinski Triangle**
+	}
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -18,10 +23,17 @@ void	render_fractal(t_fractal *fr)
 			c.real = fr->x_min + (x / (double)WIDTH * (fr->x_max - fr->x_min));
 			c.imag = fr->y_min + (y / (double)HEIGHT * (fr->y_max - fr->y_min));
 			if (fr->type == MANDELBROT)
-				i = mandelbrot(c, fr->zoom_level);
+				i = mandelbrot(c);
+			else if (fr->type == BURNING_SHIP)
+				i = burning_ship(c);
 			else if (fr->type == JULIA)
-				i = julia(c, fr->julia_c, fr->zoom_level);
-			color = get_color_fast(i);
+				i = julia(c, fr->julia_c);
+			if (fr->img->color == 1)
+				color = get_color_1(i);
+			else if (fr->img->color == 2)
+				color = get_color_2(i);
+			else if (fr->img->color == 3)
+				color = get_color_3(i);
 			offset = (y * fr->img->line_length) + ((fr->img->bpp / 8) * x);
 			*(unsigned int *)(fr->img->addr + offset) = color;
 			x++;
