@@ -29,27 +29,50 @@ int	handle_color(int keycode, t_fractal *fr)
 		fr->img->color = 2;
 	else if (keycode == 99 || keycode == 67)
 		fr->img->color = 3;
-	render_loop(fr);
+	render_fractal(fr);
+	// render_loop(fr);
 	return (0);
 }
 
 int	handle_keys(int keycode, t_fractal *fr)
 {
-    printf("Key pressed: %d\n", keycode);  // Debugging keypresses
+	printf("Key pressed: %d\n", keycode);  // Debugging keypresses
 	if (keycode == XK_Escape)
-		handle_esc(keycode, fr);  // Handle Escape key
+		handle_esc(keycode, fr);
+	// else if (keycode == XK_plus)
+	// 	MAX_ITER += 30;
+	// else if (keycode == XK_minus)
+	// 	MAX_ITER -= 30;
 	else if ((keycode >= 65 && keycode <= 90) || (keycode >= 97 && keycode <= 122))
 		handle_color(keycode, fr);
-	else if (keycode == 65361) // Left arrow
-		fr->pending_shift = -1;
+	else if (keycode == 65361)
+	{
+		fr->x_max -= (fr->x_max - fr->x_min) * 0.1;
+		fr->x_min -= (fr->x_max - fr->x_min) * 0.1;
+	} // Left arrow
+		// fr->pending_shift = -1;
 	else if (keycode == 65363) // Right arrow
-		fr->pending_shift = 1;
+	{
+		fr->x_max += (fr->x_max - fr->x_min) * 0.1;
+		fr->x_min += (fr->x_max - fr->x_min) * 0.1;
+	}
+		// fr->pending_shift = 1;
 	else if (keycode == 65362) // Up arrow
-		fr->pending_shift = -2;
+	{
+		fr->y_max -= (fr->x_max - fr->x_min) * 0.1;
+		fr->y_min -= (fr->x_max - fr->x_min) * 0.1;
+	}
+		// fr->pending_shift = -2;
 	else if (keycode == 65364) // Down arrow
-		fr->pending_shift = 2;
+	{
+		fr->y_max += (fr->x_max - fr->x_min) * 0.1;
+		fr->y_min += (fr->x_max - fr->x_min) * 0.1;
+	}
+		// fr->pending_shift = 2;
 	else
 		return (0);  // Ignore other keys
+	// render_fractal(fr);  // **Redraw the fractal**
+	// 	mlx_put_image_to_window(fr->mlx, fr->window, fr->img->img_ptr, 0, 0);
 	return (0);
 }
 
@@ -80,4 +103,5 @@ void process_shift(t_fractal *fr)
 		fr->y_min += (fr->x_max - fr->x_min) * 0.1;
 	}
 	fr->pending_shift = 0;
+	
 }

@@ -9,19 +9,18 @@ void	render_fractal(t_fractal *fr)
 	int			color;
 	int			offset;
 	
-	if (fr->type == SIERPINSKI)
-	{
-		sierpinski(fr->img, WIDTH / 2, HEIGHT - 20, WIDTH / 2, 5);
-		return;  // **Exit the function after drawing the Sierpinski Triangle**
-	}
+	double real_factor = (fr->x_max - fr->x_min) / WIDTH;
+	double imag_factor = (fr->y_max - fr->y_min) / HEIGHT;
+
 	y = 0;
 	while (y < HEIGHT)
 	{
+		c.imag = fr->y_min + y * imag_factor; 
 		x = 0;
 		while (x < WIDTH)
 		{
-			c.real = fr->x_min + (x / (double)WIDTH * (fr->x_max - fr->x_min));
-			c.imag = fr->y_min + (y / (double)HEIGHT * (fr->y_max - fr->y_min));
+			c.real = fr->x_min + x * real_factor;
+			// c.imag = fr->y_min + (y / (double)HEIGHT * (fr->y_max - fr->y_min));
 			if (fr->type == MANDELBROT)
 				i = mandelbrot(c);
 			else if (fr->type == BURNING_SHIP)
@@ -40,13 +39,18 @@ void	render_fractal(t_fractal *fr)
 		}
 		y++;
 	}
+	mlx_put_image_to_window(fr->mlx, fr->window, fr->img->img_ptr, 0, 0);
 }
 
-int render_loop(t_fractal *fr)
-{
-	process_shift(fr); 
-	process_zoom(fr);  // **Handle zoom before rendering**
-	render_fractal(fr);  // **Redraw the fractal**
-	mlx_put_image_to_window(fr->mlx, fr->window, fr->img->img_ptr, 0, 0);
-	return (0);
-}
+// int render_loop(t_fractal *fr)
+// {
+// 	//  if (fr->pending_zoom || fr->pending_shift)  // Avoid unnecessary recalculations
+//     // {
+// 	// 	process_shift(fr);
+// 	// 	process_zoom(fr);
+//     // }
+// 		render_fractal(fr);  // **Redraw the fractal**
+// 		mlx_put_image_to_window(fr->mlx, fr->window, fr->img->img_ptr, 0, 0);
+	
+// 	return (0);
+// }

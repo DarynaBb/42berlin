@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+// TODO add max_iter in a struct
+
 int	handle_error(char *message)
 {
 	ft_putstr_fd(message, 2);
@@ -14,9 +16,6 @@ void	init_fractal_params(t_fractal *fr, t_fractal_type type)
 	fr->type = type;
 	// Default zoom and center position
 	fr->zoom = 1.0;
-	// fr->center_x = 0.0;
-	// fr->center_y = 0.0;
-	// fr->zoom_level = 1;
 	// Set initial bounds of the complex plane
 	fr->x_min = X_MIN;
 	fr->x_max = X_MAX;
@@ -25,12 +24,6 @@ void	init_fractal_params(t_fractal *fr, t_fractal_type type)
 	fr->mouse_x = -1;
 	fr->mouse_y = -1;
 	fr->img->color = 1;
-	// If it's Julia, set a default constant (modifiable via user input)
-	// if (fr->type == JULIA)
-	// {
-	// 	fr->julia_c.real = -0.7;
-	// 	fr->julia_c.imag= -0.27015;
-	// }
 }
 
 int	init_fractal(t_fractal *fr)
@@ -79,7 +72,7 @@ int main(int count, char **argv)
 	mlx_key_hook(fr.window, handle_keys, &fr);
 	mlx_hook(fr.window, 17, 0, handle_close, &fr);
 	mlx_mouse_hook(fr.window, handle_mouse, &fr);
-	mlx_loop_hook(fr.mlx, render_loop, &fr);
+	mlx_loop_hook(fr.mlx, render_fractal, &fr);
 	mlx_loop(fr.mlx);
 	if (fr.img && fr.img->img_ptr)
 		mlx_destroy_image(fr.mlx, fr.img->img_ptr);
@@ -90,27 +83,3 @@ int main(int count, char **argv)
 		free(fr.mlx);
 	return (0);
 }
-
-// t_fractal_type	parse_args(int count, char **argv)
-// {
-// 	if (count < 2)
-// 	{
-// 		ft_putstr_fd("Usage: ./fractol <fractal_type>\n", 2);
-// 		ft_putstr_fd("Available fractals: mandelbrot, julia, burning_ship\n", 2);
-// 		exit(1);
-// 	}
-// 	if (ft_strncmp(argv[1], "mandelbrot", 10) == 0)
-// 		return (MANDELBROT);
-// 	else if (ft_strncmp(argv[1], "julia", 5) == 0)
-// 		return (JULIA);
-// 	else if (ft_strncmp(argv[1], "sierpienski", 11) == 0)
-// 		return (SIERPINSKI);
-// 	else if (ft_strncmp(argv[1], "burning_ship", 12) == 0)
-// 		return (BURNING_SHIP);
-// 	else
-// 	{
-// 		ft_putstr_fd("Invalid fractal type\n", 2);
-// 		exit(1);
-// 	}
-// 	return (0);
-// }

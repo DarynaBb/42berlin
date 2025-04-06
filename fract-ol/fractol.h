@@ -11,9 +11,9 @@
 
 # include <stdio.h>
 
-# define WIDTH 900
-# define HEIGHT 600
-# define MAX_ITER 250
+# define WIDTH 800
+# define HEIGHT 800
+# define MAX_ITER 72
 // # define ZOOM_FACTOR 1.2
 # define X_MIN -2.0// Left bound of the complex plane
 # define X_MAX 2.0// Right bound of the complex plane
@@ -72,6 +72,8 @@ typedef struct	s_fractal
 	int				pending_shift;
 	int				mouse_x;
 	int				mouse_y;
+	int				offset_x;
+	int				offset_y;
 
 }	t_fractal;
 
@@ -81,15 +83,15 @@ typedef struct	s_fractal
 int		handle_esc(int keycode, t_fractal *fr);
 int		handle_close(t_fractal *fr);
 int		handle_keys(int keycode, t_fractal *fr);
-void	process_shift(t_fractal *fr);
+// void	process_shift(t_fractal *fr);
 
 //mouse
 int		handle_mouse(int button, int x, int y, t_fractal *fr);
-void	process_zoom(t_fractal *fr);
+// void	process_zoom(t_fractal *fr);
 
 // Rendering:
 void	render_fractal(t_fractal *fr);
-int		render_loop(t_fractal *fr);
+// int		render_loop(t_fractal *fr);
 
 // Fractals
 int		mandelbrot(t_complex c);

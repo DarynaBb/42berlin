@@ -9,7 +9,7 @@ int	get_color_1(int i)
 
 	if (i == MAX_ITER)
 		return (0x000000);
-	t = (double)i / MAX_ITER;
+	t = (double)i / MAX_ITER; //how far the point to the mnojina fraktala
 	red = (int)(9 * (1 -t) * t * t * t * 255);
 	green = (int)(15 * (1 - t) * (1 - t) * t * t * 255);
 	blue = (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
