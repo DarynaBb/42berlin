@@ -1,6 +1,6 @@
 #include "philo.h"
 
-int	is_valid_number(int argc, char **argv)
+static int	is_valid_number(int argc, char **argv)
 {
 	int	i;
 
@@ -17,7 +17,7 @@ int	is_valid_number(int argc, char **argv)
 	return (1);
 }
 
-int	parse_args(int argc, char **argv, t_args *args)
+int	parse_args(int argc, char **argv, t_data *data)
 {
 	if (argc != 5 && argc != 6)
 	{
@@ -27,18 +27,75 @@ int	parse_args(int argc, char **argv, t_args *args)
 	}
 	if (!is_valid_number(argc, argv))
 		return (0);
-	args->num_philo = ft_atol(argv[1]);
-	args->time_to_die = ft_atol(argv[2]);
-	args->time_to_eat = ft_atol(argv[3]);
-	args->time_to_sleep = ft_atol(argv[4]);
-	args->max_meals = -1;
+	data->num_philos = ft_atol(argv[1]);
+	data->time_to_die = ft_atol(argv[2]);
+	data->time_to_eat = ft_atol(argv[3]);
+	data->time_to_sleep = ft_atol(argv[4]);
+	data->max_meals = -1;
 	if (argc == 6)
-		args->max_meals = ft_atol(argv[5]);
-	if (args->num_philo <= 0 || args->time_to_die < 0
-		|| args->time_to_eat < 0 || args->time_to_sleep < 0)
+		data->max_meals = ft_atol(argv[5]);
+	if (data->num_philos <= 0 || data->time_to_die < 0
+		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
 	{
 		printf("Error: All arguments must be positive integers.\n");
 		return (0);
 	}
 	return (1);
 }
+
+t_data	*init_data(t_data *data)
+{
+	data->someone_died = 0;
+	data->start_time = 0; // will be set later when simulation starts
+	data->forks = NULL;
+	data->philos = NULL;
+	if (pthread_mutex_init(&data->print_lock, NULL) != 0)
+	{
+		free(data);
+		return (NULL);
+	}
+	return (data);
+}
+
+int	init_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
+	if (!data->forks)
+		return (0);
+
+	while (i < data->num_philos)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			free(data->forks);
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+int	init_philos(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->philos = malloc(sizeof(t_philo) * data->num_philos);
+	if (!data->philos)
+		return (0);
+	while (i < data->num_philos)
+	{
+		data->philos[i].id = i + 1;
+		data->philos[i].meals_eaten = 0;
+		data->philos[i].last_meal_time = 0;
+		data->philos[i].data = data;
+		data->philos[i].left_fork = &data->forks[i];
+		data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philos];
+		i++;
+	}
+	return (1);
+	}

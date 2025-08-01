@@ -16,10 +16,10 @@
 
 typedef struct s_data
 {
-	int				num_philo;         // Number of philosophers/forks
-	int				time_to_die;       // Max time a philosopher can go without eating
-	int				time_to_eat;       // Time it takes to eat
-	int				time_to_sleep;     // Time it takes to sleep
+	int				num_philos;         // Number of philosophers/forks
+	long			time_to_die;       // Max time a philosopher can go without eating
+	long			time_to_eat;       // Time it takes to eat
+	long			time_to_sleep;     // Time it takes to sleep
 	int				max_meals;         // Optional: times each must eat
 	volatile int	someone_died;      // Flag: has anyone died
 	long			start_time;        // Timestamp of simulation start
@@ -42,20 +42,14 @@ typedef struct s_philo
 	t_data			*data;             // Pointer to global shared data
 }	t_philo;
 
-typedef struct s_args
-{
-	int	num_philo;
-	int	time_to_die;
-	int	time_to_eat;
-	int	time_to_sleep;
-	int	max_meals;
-}	t_args;
-
 // utils
 long	ft_atol(const char *str);
 int		is_numeric(const char *str);
 
 // init
-int	parse_args(int argc, char **argv, t_args *args);
+int		parse_args(int argc, char **argv, t_data *data);
+t_data	*init_data(t_data *data);
+int		init_philos(t_data *data);
+int		init_forks(t_data *data);
 
 #endif
