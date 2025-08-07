@@ -1,5 +1,7 @@
 #include "philo.h"
+
 // 5
+
 static int	is_valid_number(int argc, char **argv)
 {
 	int	i;
@@ -46,6 +48,7 @@ int	parse_args(int argc, char **argv, t_data *data)
 t_data	*init_data(t_data *data)
 {
 	data->someone_died = 0;
+
 	data->start_time = get_time();
 	data->forks = NULL;
 	data->philos = NULL;

@@ -23,7 +23,6 @@ void	print_data(t_data *data)
 	printf("Forks: %p\n", data->forks);
 	printf("Print lock: %p\n", &data->print_lock);
 	printf("Philosophers: %p\n", data->philos);
-
 }
 
 int	error_exit(char *message)

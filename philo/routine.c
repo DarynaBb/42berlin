@@ -31,8 +31,6 @@ int	has_someone_died(t_data *data)
 	return (result);
 }
 
-// 
-
 void	*routine(void *arg)
 {
 	t_philo	*philo;

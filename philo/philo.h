@@ -14,6 +14,7 @@
 // for pthread_ functions
 #include <pthread.h>
 
+
 typedef long long	t_llong;
 
 typedef struct s_data
@@ -25,12 +26,14 @@ typedef struct s_data
 	int				max_meals;         // Optional: times each must eat
 	volatile int	someone_died;      // Flag: has anyone died
 	t_llong			start_time;       // Timestamp of simulation start
-
 	pthread_mutex_t	*forks;            // Array of mutexes (forks)
 	pthread_mutex_t	print_lock;       // Mutex for synchronized printing
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t start_lock;
+	long			start_time;        // Timestamp of simulation start
+	pthread_mutex_t	*forks;            // Array of mutexes (forks)
+	pthread_mutex_t	print_lock;       // Mutex for synchronized printing
 	struct s_philo	*philos;           // Array of philosopher structs
 }	t_data;
 
@@ -43,7 +46,6 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;        // Pointer to the left fork mutex
 	pthread_mutex_t	*right_fork;       // Pointer to the right fork mutex
 	t_data			*data;             // Pointer to global shared data
-
 	int				has_left_fork;
 	int				has_right_fork;
 }	t_philo;
