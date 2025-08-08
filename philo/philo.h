@@ -20,9 +20,9 @@ typedef long long	t_llong;
 typedef struct s_data
 {
 	int				num_philos;         // Number of philosophers/forks
-	long			time_to_die;       // Max time a philosopher can go without eating
-	long			time_to_eat;       // Time it takes to eat
-	long			time_to_sleep;     // Time it takes to sleep
+	t_llong			time_to_die;       // Max time a philosopher can go without eating
+	t_llong			time_to_eat;       // Time it takes to eat
+	t_llong			time_to_sleep;     // Time it takes to sleep
 	int				max_meals;         // Optional: times each must eat
 	volatile int	someone_died;      // Flag: has anyone died
 	t_llong			start_time;       // Timestamp of simulation start
@@ -31,30 +31,30 @@ typedef struct s_data
 	pthread_mutex_t	death_lock;
 	pthread_mutex_t	meal_lock;
 	pthread_mutex_t start_lock;
-	long			start_time;        // Timestamp of simulation start
-	pthread_mutex_t	*forks;            // Array of mutexes (forks)
-	pthread_mutex_t	print_lock;       // Mutex for synchronized printing
+	pthread_mutex_t	forks_lock;
 	struct s_philo	*philos;           // Array of philosopher structs
+
 }	t_data;
 
 typedef struct s_philo
 {
 	int				id;                // Philosopher number (1 to N)
 	int				meals_eaten;       // How many times this philosopher has eaten
-	long			last_meal_time;    // Timestamp of last meal (ms)
+	t_llong			last_meal_time;    // Timestamp of last meal (ms)
 	pthread_t		thread;            // Thread that runs this philosopher
 	pthread_mutex_t	*left_fork;        // Pointer to the left fork mutex
 	pthread_mutex_t	*right_fork;       // Pointer to the right fork mutex
 	t_data			*data;             // Pointer to global shared data
 	int				has_left_fork;
 	int				has_right_fork;
+	int	left_fork_available;
+	int right_fork_available;
 }	t_philo;
 
 // utils
 long	ft_atol(char *str);
 int		is_numeric(const char *str);
 void	destroy_data(t_data *data);
-// long	get_time(void);
 t_llong	get_time(void);
 void	ft_usleep(long milliseconds, t_data *data);
 

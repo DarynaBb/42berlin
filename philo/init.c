@@ -37,7 +37,7 @@ int	parse_args(int argc, char **argv, t_data *data)
 	if (argc == 6)
 		data->max_meals = ft_atol(argv[5]);
 	if (data->num_philos <= 0 || data->time_to_die < 0
-		|| data->time_to_eat < 0 || data->time_to_sleep < 0)
+		|| data->time_to_eat < 0 || data->time_to_sleep < 0 || (argc == 6 && data->max_meals <= 0))
 	{
 		printf("Error: All arguments must be positive integers.\n");
 		return (0);
@@ -48,7 +48,6 @@ int	parse_args(int argc, char **argv, t_data *data)
 t_data	*init_data(t_data *data)
 {
 	data->someone_died = 0;
-
 	data->start_time = get_time();
 	data->forks = NULL;
 	data->philos = NULL;
@@ -83,7 +82,6 @@ int	init_forks(t_data *data)
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philos);
 	if (!data->forks)
 		return (0);
-
 	while (i < data->num_philos)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
@@ -116,6 +114,8 @@ int	init_philos(t_data *data)
 		data->philos[i].right_fork = &data->forks[(i + 1) % data->num_philos];
 		data->philos[i].has_left_fork = 0;
 		data->philos[i].has_right_fork = 0;
+		data->philos->left_fork_available = 1;
+		data->philos->right_fork_available = 1;
 		i++;
 	}
 	return (1);

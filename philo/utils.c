@@ -1,5 +1,5 @@
 #include "philo.h"
-
+// 5
 int	is_numeric(const char *str)
 {
 	int	i;
@@ -60,15 +60,6 @@ void	destroy_data(t_data *data)
 		free(data->philos);
 }
 
-// long	get_time(void)
-// {
-// 	struct timeval	time;
-
-// 	if (gettimeofday(&time, NULL) != 0)
-// 		return (-1);
-// 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
-// }
-
 t_llong	get_time(void)
 {
 	struct timeval	time;
@@ -76,8 +67,6 @@ t_llong	get_time(void)
 	gettimeofday(&time, NULL);
 	return (time.tv_sec * 1000LL + time.tv_usec / 1000LL);
 }
-
-
 
 void	ft_usleep(long milliseconds, t_data *data)
 {

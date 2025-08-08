@@ -17,29 +17,39 @@ void	if_full(t_data *data)
 	pthread_mutex_unlock(&data->death_lock);
 }
 
+void	check_philo_state(t_philo *philos, t_data *data, int *full_philos, int i)
+{
+	long	time_since_last_meal;
+
+	pthread_mutex_lock(&data->meal_lock);
+	time_since_last_meal = get_time() - philos[i].last_meal_time;
+	if (time_since_last_meal >= data->time_to_die)
+	{
+		if_died(&philos[i], data);
+		pthread_mutex_unlock(&data->meal_lock);
+	}
+	else
+	{
+		if (data->max_meals != -1 && philos[i].meals_eaten >= data->max_meals)
+			(*full_philos)++;
+		pthread_mutex_unlock(&data->meal_lock);
+	}
+}
+
 void	monitor_philos(t_philo *philos, t_data *data)
 {
-	int		i;
-	long	time_since_last_meal;
-	int		full_philos;
+	int	i;
+	int	full_philos;
 
-	while(!has_someone_died(data))
+	while (!has_someone_died(data))
 	{
 		i = 0;
 		full_philos = 0;
 		while (i < data->num_philos)
 		{
-			pthread_mutex_lock(&data->meal_lock);
-			time_since_last_meal = get_time() - philos[i].last_meal_time;
-			if (time_since_last_meal >= data->time_to_die)
-			{
-				if_died(&philos[i], data);
-				pthread_mutex_unlock(&data->meal_lock);
+			check_philo_state(philos, data, &full_philos, i);
+			if (has_someone_died(data))
 				return ;
-			}
-			if (data->max_meals != -1 && philos[i].meals_eaten >= data->max_meals)
-				full_philos++;
-			pthread_mutex_unlock(&data->meal_lock);
 			i++;
 		}
 		if (data->max_meals != -1 && full_philos == data->num_philos)
@@ -47,6 +57,6 @@ void	monitor_philos(t_philo *philos, t_data *data)
 			if_full(data);
 			return ;
 		}
-		// usleep(1000);
+		usleep(1000);
 	}
 }
