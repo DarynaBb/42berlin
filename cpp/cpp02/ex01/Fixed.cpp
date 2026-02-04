@@ -2,13 +2,12 @@
 #include <iostream>
 #include <cmath>
 
-Fixed::Fixed(void) {
-	value = 0;
+Fixed::Fixed(void): value(0) {
 	std::cout << "Default constructor called" << std::endl;
 };
 
 Fixed::~Fixed(void) {
-	std::cout << "Desctructor called" << std::endl;
+	std::cout << "Destructor called" << std::endl;
 }
 
 Fixed::Fixed(const Fixed &src) {
@@ -29,7 +28,7 @@ std::ostream &operator<<(std::ostream &out, const Fixed &fixed) {
 }
 
 Fixed::Fixed(const int input_num) {
-	std::cout << "Int coonstructor called" << std::endl;
+	std::cout << "Int constructor called" << std::endl;
 	this->value = input_num << bits;
 }
 
@@ -39,7 +38,6 @@ Fixed::Fixed(const float input_num) {
 }
 
 int Fixed::getRawBits(void) const {
-	std::cout << "getRawBits member function called" << std::endl;
 	return this->value;
 }
 
