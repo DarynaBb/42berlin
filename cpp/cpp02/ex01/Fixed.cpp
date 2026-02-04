@@ -23,6 +23,11 @@ Fixed &Fixed::operator=(const Fixed &src) {
 	return *this;
 }
 
+std::ostream &operator<<(std::ostream &out, const Fixed &fixed) {
+	out << fixed.toFloat();
+	return out;
+}
+
 Fixed::Fixed(const int input_num) {
 	std::cout << "Int coonstructor called" << std::endl;
 	this->value = input_num << bits;
@@ -40,4 +45,12 @@ int Fixed::getRawBits(void) const {
 
 void Fixed::setRawBits(int const raw) {
 	this->value = raw;
+}
+
+float Fixed::toFloat(void) const {
+	return (float)this->value / (1 << bits);
+}
+
+int Fixed::toInt(void) const {
+	return this->value >> bits;
 }
