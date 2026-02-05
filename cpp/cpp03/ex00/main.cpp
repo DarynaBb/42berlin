@@ -3,6 +3,49 @@
 
 int main()
 {
+	std::cout << "===== TEST 1: INITIALIZATION & BASICS =====" << std::endl;
+	{
+		ClapTrap clippy("Clippy");
+		// State: HP 10, Energy 10, Damage 0
+		clippy.attack("a training dummy");
+		// Result: Should print attack message, Energy becomes 9.
+		clippy.beRepaired(5);
+		// Result: HP becomes 15, Energy becomes 8.
+	}
+
+	std::cout << "\n===== TEST 2: ENERGY DEPLETION =====" << std::endl;
+	{
+		ClapTrap tired("TiredBot");
+		// Exhaust all 10 energy points
+		for (int i = 0; i < 10; i++) {
+			tired.attack("target");
+		}
+		// 11th action: Should fail because Energy is 0
+		std::cout << "--- 11th action attempt ---" << std::endl;
+		tired.attack("target");
+		tired.beRepaired(10);
+	}
+
+	std::cout << "\n===== TEST 3: HIT POINTS & DEATH =====" << std::endl;
+	{
+		ClapTrap fragile("FragileBot");
+		fragile.takeDamage(5); // HP: 5
+		fragile.takeDamage(10); // HP: 0 (should handle overflow and not go to -5)
+		
+		// Should not be able to act with 0 HP
+		std::cout << "--- Actions after death ---" << std::endl;
+		fragile.attack("someone");
+		fragile.beRepaired(5);
+	}
+
+	std::cout << "\n===== TEST 4: ORTHODOX CANONICAL FORM =====" << std::endl;
+	{
+		ClapTrap original("Original");
+		ClapTrap copy(original); // Copy constructor
+		ClapTrap assignee("ToAssign");
+		assignee = original;	 // Assignment operator
+	}
+
 	std::cout << "=== ClapTrap Tests ===" << std::endl;
 	std::cout << std::endl;
 
