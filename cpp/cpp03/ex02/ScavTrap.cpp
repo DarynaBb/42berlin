@@ -4,7 +4,7 @@
 ScavTrap::ScavTrap() {
 	this->name = "Default";
 	this->hitPoints = 100;
-	this->energy = 50;
+	this->energyPoints = 50;
 	this->attackDamage = 20;
 	std::cout << "ScavTrap default constructor called" << std::endl;
 }
@@ -12,7 +12,7 @@ ScavTrap::ScavTrap() {
 ScavTrap::ScavTrap(const std::string& name) {
 	this->name = name;
 	this->hitPoints = 100;
-	this->energy = 50;
+	this->energyPoints = 50;
 	this->attackDamage = 20;
 	std::cout << "ScavTrap" << this->name << " constructor called" << std::endl;
 }
@@ -37,12 +37,12 @@ void ScavTrap::attack(const std::string& target) {
 		std::cout << "ScavTrap " << this->name << " is dead and cannot attack!" << std::endl;
 		return;
 	}
-	if (this->energy == 0)
+	if (this->energyPoints == 0)
 	{
 		std::cout << "ScavTrap " << this->name << " has no energy to attack!" << std::endl;
 		return;
 	}
-	this->energy--;
+	this->energyPoints--;
 	std::cout << "ScavTrap " << this->name << " attacks " << target << ", causing " << this->attackDamage << " points of damage!" << std::endl;
 }
 
