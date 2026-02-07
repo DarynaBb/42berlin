@@ -82,6 +82,10 @@ Fixed Fixed::operator*(const Fixed &src) const {
 }
 
 Fixed Fixed::operator/(const Fixed &src) const {
+	if (src.getRawBits() == 0) {
+		std::cout << "Error: Division by zero" << std::endl;
+		return Fixed(0);
+	}
 	return Fixed(this->toFloat() / src.toFloat());
 }
 
