@@ -1,8 +1,7 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-Fixed::Fixed(void) {
-	value = 0;
+Fixed::Fixed(void) : value(0) {
 	std::cout << "Default constructor called" << std::endl;
 };
 

@@ -8,8 +8,8 @@ class Fixed {
 		static const int bits = 8; 
 	public:
 		Fixed();
-		Fixed(const Fixed &src);
-		Fixed &operator = (const Fixed &src);
+		Fixed(const Fixed &src); //creates new object
+		Fixed &operator = (const Fixed &src); // copies data from one obj to another
 		~Fixed();
 		int getRawBits(void) const;
 		void setRawBits(int const raw);
