@@ -7,7 +7,6 @@
 
 int main()
 {
-	// error
 	// const Animal* meta = new Animal();
 
 	const Animal* j = new Dog();
