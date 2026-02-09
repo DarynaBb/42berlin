@@ -3,9 +3,10 @@
 #include <iostream>
 
 int main() {
+
+	
 	std::cout << "========== 1. CONSTRUCTION / DESTRUCTION ORDER ==========" << std::endl;
 	{
-		// EVAL LIST: Check if ClapTrap constructor is displayed first, then ScavTrap.
 		ScavTrap scav("ST-01");
 	}
 	// EVAL LIST: Check if ScavTrap destructor is displayed first, then ClapTrap.
