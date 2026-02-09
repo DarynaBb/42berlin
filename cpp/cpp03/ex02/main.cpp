@@ -4,48 +4,40 @@
 #include <iostream>
 
 int main() {
-	std::cout << "========== 1. FRAGTRAP CONSTR/DESTR CHAINING ==========" << std::endl;
+	std::cout << "== Fragtrap constr/destr ==" << std::endl;
 	{
-		// EVAL LIST: Check if ClapTrap message comes first, then FragTrap.
-		FragTrap frag("FR-4G");
-		std::cout << "FragTrap is active inside this scope." << std::endl;
+		FragTrap frag("frag");
 	}
-	// EVAL LIST: Check if FragTrap message comes first, then ClapTrap.
 
-	std::cout << "\n========== 2. ATTRIBUTES & ATTACK (INHERITANCE) ==========" << std::endl;
+	std::cout << "\n== Attributes & attack ==" << std::endl;
 	{
-		FragTrap frag("Destroyer");
-		ClapTrap target("PoorDummy");
+		FragTrap frag("Frag");
+		ClapTrap target("Target");
 
-		// FragTrap should have 100 HP, 100 EP, and 30 Attack Damage
-		frag.attack("PoorDummy");
+		frag.attack("Target");
 		target.takeDamage(30); 
-		// Result: PoorDummy (10 HP) should be destroyed instantly.
 		
 		std::cout << "--- Testing inheritance: takeDamage & beRepaired ---" << std::endl;
-		frag.takeDamage(50);   // Inherited from ClapTrap
-		frag.beRepaired(20);   // Inherited from ClapTrap
-		// State: Should have around 70 HP and 98 EP.
+		frag.takeDamage(50);
+		frag.beRepaired(20);
 	}
 
-	std::cout << "\n========== 3. SPECIAL FEATURE: highFivesGuys() ==========" << std::endl;
+	std::cout << "\n== highFivesGuys ==" << std::endl;
 	{
-		FragTrap frag("FriendlyBot");
-		// EVAL LIST: Positive high-fives request on standard output.
+		FragTrap frag("Five");
 		frag.highFivesGuys();
 	}
 
-	std::cout << "\n========== 4. ENERGY DEPLETION TEST ==========" << std::endl;
+	std::cout << "\n== Energy depletion test==" << std::endl;
 	{
 		FragTrap frag("EnergyBot");
-		// FragTrap has 100 Energy Points. Let's use some.
 		for (int i = 0; i < 5; i++) {
 			frag.attack("target");
 		}
 		std::cout << "FragTrap still has plenty of energy left!" << std::endl;
 	}
 
-	std::cout << "\n========== 5. ORTHODOX CANONICAL FORM ==========" << std::endl;
+	std::cout << "\n== Orthodox canonical form ==" << std::endl;
 	{
 		FragTrap original("Original");
 		FragTrap copy(original);
