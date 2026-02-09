@@ -1,12 +1,24 @@
 #include "pipex.h"
 
+// int	open_input_file(char *filename)
+// {
+// 	int infile = open(filename, O_RDONLY);
+// 	if (infile < 0)
+// 	{
+// 		perror("Warning: Cannot open input file (using empty input)");
+// 		return (open("/dev/null", O_RDONLY));
+// 	}
+// 	return infile;
+// }
 int	open_input_file(char *filename)
 {
 	int infile = open(filename, O_RDONLY);
 	if (infile < 0)
 	{
 		perror("Warning: Cannot open input file (using empty input)");
-		return (open("/dev/null", O_RDONLY));
+		infile = open("/dev/null", O_RDONLY);  // Використовуємо порожній вхід
+		if (infile < 0)
+			handle_error("Error: Cannot open /dev/null");
 	}
 	return infile;
 }

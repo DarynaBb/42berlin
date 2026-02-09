@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+void print_solution(int *nums, int *selected, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		if (selected[i])
+		{
+			printf("%d", nums[i]);
+			if (i < size -1)
+				printf(" ");
+		}
+	}
+	printf("\n");
+}
+
+void find_combinations(int *nums, int *selected, int index, int size, int target, int current_sum)
+{
+	if (size == index)
+	{
+		if (current_sum == target)
+			print_solution(nums, selected, size);
+		return;
+	}
+	if (current_sum > target)
+		return;
+	selected[index] = 0;
+	find_combinations(nums, selected, index + 1, size, target, current_sum);
+	selected[index] = 1;
+	find_combinations(nums, selected, index + 1, size, target, current_sum + nums[index]);
+	
+} 
+
+int main(int argc, char **argv)
+{
+	if (argc < 3)
+	{
+		printf("Usage");
+		return 1;
+	}
+	int size = argc - 2;
+	int nums[size];
+	int selected[size];
+	int target = atoi(argv[1]);
+	
+	for (int i = 0; i < size; i++)
+	{
+		nums[i] = atoi(argv[2 + i]);
+		selected[i] = 0;
+	}
+	find_combinations(nums, selected, 0, size, target, 0);
+	return 0;
+}

@@ -106,38 +106,3 @@ char	**ft_split(char const *s, char c)
 		return (NULL);
 	return (fill_result(result, s, c));
 }
-// void free_split(char **arr)
-// {
-//     int i = 0;
-//     while (arr[i])
-//     {
-//         free(arr[i]);
-//         i++;
-//     }
-//     free(arr);
-// }
-// void print_split(char **arr)
-// {
-//     int i = 0;
-//     while (arr[i])
-//     {
-//         printf("'%s'\n", arr[i]);
-//         i++;
-//     }
-// }
-// int main()
-// {
-//     char const s[] = "hello,world,,,,hi,,,,,,,h,,,,,,f";
-//     char c = ',';
-//     char **arr = ft_split(s, c);
-//     if (arr)
-//     {
-//         print_split(arr);
-//         free_split(arr);
-//     }
-//     else
-//     {
-//         printf("Error: Memory allocation failed.\n");
-//     }
-//     return 0;
-// }
