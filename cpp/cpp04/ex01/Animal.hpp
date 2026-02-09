@@ -11,7 +11,7 @@ class Animal
 		Animal();
 		Animal(const Animal& src);
 		Animal& operator=(const Animal& src);
-		virtual ~Animal();
+		virtual ~Animal(); // Dynamic Binding, static binding
 
 		virtual void makeSound() const;
 		std::string getType() const;

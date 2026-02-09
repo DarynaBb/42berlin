@@ -15,6 +15,7 @@ class Cat : public Animal
 		~Cat();
 
 		void makeSound() const;
+		Brain* getBrain() const;
 };
 
 #endif

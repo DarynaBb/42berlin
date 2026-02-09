@@ -10,12 +10,13 @@ Cat::Cat() : Animal()
 
 Cat::Cat(const Cat& src) : Animal(src)
 {
-	this->brain = new Brain(*src.brain);
+	this->brain = new Brain(*src.brain); //otherwise shared thoughts, double free
 	std::cout << "Cat copy constructor called" << std::endl;
 }
 Cat& Cat::operator=(const Cat& src)
 {
 	std::cout << "Cat copy assignment operator called" << std::endl;
+	// otherwise shared thoughts, double free, memory leak
 	if (this != &src)
 	{
 		Animal::operator=(src);
@@ -34,4 +35,9 @@ Cat::~Cat()
 void Cat::makeSound() const
 {
 	std::cout << "Miau! Miau!" << std::endl;
+}
+
+Brain* Cat::getBrain() const
+{
+	return this->brain;
 }
