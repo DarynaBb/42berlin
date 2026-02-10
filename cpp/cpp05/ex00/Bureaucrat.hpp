@@ -17,19 +17,19 @@ class Bureaucrat
 		Bureaucrat& operator=(const Bureaucrat& src);
 		virtual ~Bureaucrat();
 
-		std::string& getName() const;
+		std::string getName() const;
 		int getGrade() const;
 
-		void gradeDecrement();
-		void gradeIncrement();
+		void decrementGrade();
+		void incrementGrade();
 
-		class ToHighException : public std::exception {
+		class GradeTooHighException : public std::exception {
 			public:
 				virtual const char* what() const throw() {
 					return "Grade is too high (above 1)!";
 				}
 		};
-		class ToLowException : public std::exception {
+		class GradeTooLowException : public std::exception {
 			public:
 				virtual const char* what() const throw() {
 					return "Grade is too low (below 150)!";
